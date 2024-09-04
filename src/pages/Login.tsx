@@ -11,7 +11,7 @@ const Login = (props: Props) => {
             {/* <h1 className="text-yellow-500">left</h1> */}
 
             <div className="">
-                <h1 className="text-white text-xl p-5 m-5">“This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.”</h1>
+                <h1 className="text-white text-xl p-5 m-5">“The all in one event app, custom made for your company.”</h1>
             </div>
         </div>
 
