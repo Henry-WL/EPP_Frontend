@@ -1,6 +1,37 @@
 type Props = {};
+import axios from "axios";
+import { useContext, useState } from "react";
+import authContext from "../context/auth-context";
 
 const Login = (props: Props) => {
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const auth = useContext(authContext)
+  console.log(auth)
+
+  const loginSignupHandler = async (event) => {
+    event.preventDefault()
+
+    try {
+      const response = await axios.post(`http://localhost:3000/user/login/`, 
+        {
+          "email": "henry@x.com",
+          "password": "123456789"
+        }
+      )
+
+      console.log(response)
+
+      auth.login(response.data.token)
+    } catch (err) {
+      console.log(err)
+      // setError
+    }
+  }
+
+
+
   return (
     <div className="flex min-h-screen">
 
@@ -32,7 +63,7 @@ const Login = (props: Props) => {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" className="space-y-6">
+            <form className="space-y-6" onSubmit={loginSignupHandler}>
               <div>
                 <label
                   htmlFor="email"
