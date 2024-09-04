@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import EventCard from '../components/EventCard'
 
 type Props = {}
 
@@ -25,9 +26,9 @@ useEffect(() => {
         <h1>Events</h1>
 
         
-        <div>
+        <div className='flex gap-4'>
             {events.map((event) => {
-                return <h1 key={event._id}>{event.name}</h1>
+                return <EventCard eventName={event.name} eventLocation={event.location} key={event._id}/>
             })}
         </div>
 
