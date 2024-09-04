@@ -2,6 +2,7 @@ type Props = {};
 import axios from "axios";
 import { useContext, useState } from "react";
 import authContext from "../context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props: Props) => {
   const [email, setEmail] = useState<string>("")
@@ -9,6 +10,7 @@ const Login = (props: Props) => {
   const [error, setError] = useState("")
 
   const auth = useContext(authContext)
+  // const navigate = useNavigate()
   console.log(auth)
 
   const loginSignupHandler = async (event) => {
@@ -25,6 +27,8 @@ const Login = (props: Props) => {
       console.log(response)
 
       auth.login(response.data.token)
+      // navigate('/')
+      
     } catch (err) {
       console.log(err)
       setError(err.response.data.message)
