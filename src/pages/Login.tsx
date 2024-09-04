@@ -6,6 +6,7 @@ import authContext from "../context/auth-context";
 const Login = (props: Props) => {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const [error, setError] = useState("")
 
   const auth = useContext(authContext)
   console.log(auth)
@@ -16,8 +17,8 @@ const Login = (props: Props) => {
     try {
       const response = await axios.post(`http://localhost:3000/user/login/`, 
         {
-          "email": "henry@x.com",
-          "password": "123456789"
+          "email": email,
+          "password": password
         }
       )
 
@@ -26,7 +27,7 @@ const Login = (props: Props) => {
       auth.login(response.data.token)
     } catch (err) {
       console.log(err)
-      // setError
+      setError(err.response.data.message)
     }
   }
 
@@ -76,7 +77,8 @@ const Login = (props: Props) => {
                     id="email"
                     name="email"
                     type="email"
-                    required
+                    // required
+                    onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -106,11 +108,15 @@ const Login = (props: Props) => {
                     name="password"
                     type="password"
                     required
+                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+
+                  {error && <p className="text-red-500">{error}</p>}
                 </div>
               </div>
+              
 
               <div>
                 <button
