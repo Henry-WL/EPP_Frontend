@@ -28,7 +28,7 @@ useEffect(() => {
         
         <div className='flex gap-4'>
             {events.map((event) => {
-                return <EventCard eventName={event.name} eventLocation={event.location} key={event._id}/>
+                return <EventCard eventName={event.name} eventLocation={event.location} id={event._id}/>
             })}
         </div>
 

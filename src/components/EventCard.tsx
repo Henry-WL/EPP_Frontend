@@ -1,15 +1,21 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     eventName:string;
     eventLocation:string
+    id:string
 }
 
-function EventCard({eventName, eventLocation}: Props) {
+function EventCard({eventName, eventLocation, id}: Props) {
+
+    const navigate = useNavigate()
     return (
         <div
           className="max-w-sm border-2 border-black"
         //   imgAlt="Meaningful alt text for an image that is not purely decorative"
+        onClick={() => navigate(`/event/${id}`)}
+        
         >
             <img src="https://flowbite-react.com/images/blog/image-1.jpg" alt="" />
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

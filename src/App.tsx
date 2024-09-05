@@ -5,6 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Example from "./components/Navbar";
 import Events from "./pages/Events";
 import NewEvent from "./pages/NewEvent";
+import SingleEventPage from "./pages/SingleEventPage";
 
 const App = () => {
   const auth = useContext(authContext)
@@ -31,6 +32,8 @@ const App = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/events" element={<Events/>}/> 
         <Route path="/newevent" element={<NewEvent/>}/>
+        <Route path="/event/:eventId" element={<SingleEventPage/>}/>
+
       </Routes>
     </div>
   );
