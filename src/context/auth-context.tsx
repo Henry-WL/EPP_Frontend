@@ -6,15 +6,16 @@ const authContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
-  // const [userId, setUserId] = useState()
+  const [userId, setUserId] = useState()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   // const [username, setUsername] = useState()
   // const [avatarURL, setavatarURL] = useState()
   const navigate = useNavigate()
 
-  const login = (token) => {
+  const login = (token, uid) => {
     console.log(token);
     setToken(token);
+    setUserId(uid)
     setIsLoggedIn(true);
     navigate('/')
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ login, setIsLoggedIn, isLoggedIn, logout, token }}
+      value={{ login, setIsLoggedIn, isLoggedIn, logout, token, userId }}
     >
       {children}
     </authContext.Provider>

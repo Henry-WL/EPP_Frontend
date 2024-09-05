@@ -26,7 +26,7 @@ const Login = (props: Props) => {
 
       console.log(response)
 
-      auth.login(response.data.token)
+      auth.login(response.data.token, response.data.userId)
       // navigate('/')
       
     } catch (err) {

@@ -16,7 +16,7 @@ const App = () => {
     if (!auth.isLoggedIn) {
       navigate('/login')
     }
-  },[auth.isLoggedIn])
+  },[auth.isLogedIn, navigate])
 
   return (
     <div className="">

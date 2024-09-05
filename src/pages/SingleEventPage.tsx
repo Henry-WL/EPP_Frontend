@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import authContext from "../context/auth-context";
 
 type Props = {};
 
@@ -8,6 +9,10 @@ function SingleEventPage({}: Props) {
     const [event, setEvent] = useState()
     const [loading, setLoading] = useState(true)
   const { eventId } = useParams();
+  const auth = useContext(authContext)
+
+  console.log(auth)
+
 
   console.log(eventId);
 
@@ -22,6 +27,20 @@ function SingleEventPage({}: Props) {
     getSingleEvent()
   }, [])
 
+  const joinEventHandler = async () => {
+    console.log(eventId)
+
+    const response = await axios.post(`http://localhost:3000/events/join/${eventId}`, 
+      {
+          "userId": auth.userId,
+          "username": 'frontyuser'
+        }
+
+  )
+
+  console.log(response)
+  }
+
   return (
     <div>
 
@@ -35,6 +54,11 @@ function SingleEventPage({}: Props) {
       </div>
 
         {!loading && <p>{event.location}</p>}
+
+
+        <div>
+            <button onClick={joinEventHandler} className="p-2 bg-green-400 rounded-md">Join Event</button>
+        </div>
     </div>
   );
 }
