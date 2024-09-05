@@ -41,6 +41,10 @@ function SingleEventPage({}: Props) {
   console.log(response)
   }
 
+  const leaveEventHandler = async () => {
+    console.log('first')
+  }
+
   return (
     <div>
 
@@ -58,6 +62,9 @@ function SingleEventPage({}: Props) {
 
         <div>
             <button onClick={joinEventHandler} className="p-2 bg-green-400 rounded-md">Join Event</button>
+
+
+            <button onClick={leaveEventHandler} className="p-2 bg-red-400 rounded-md">Leave Event</button>
         </div>
     </div>
   );
