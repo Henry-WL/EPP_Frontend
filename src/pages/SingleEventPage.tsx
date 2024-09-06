@@ -33,7 +33,7 @@ function SingleEventPage({}: Props) {
     const response = await axios.post(`http://localhost:3000/events/join/${eventId}`, 
       {
           "userId": auth.userId,
-          "username": 'frontyuser'
+          "username": auth.email
         }
 
   )
@@ -43,6 +43,16 @@ function SingleEventPage({}: Props) {
 
   const leaveEventHandler = async () => {
     console.log('first')
+
+    const response = await axios.post(`http://localhost:3000/events/leave/${eventId}`, 
+      {
+          "userId": auth.userId,
+
+        }
+
+  )
+
+  console.log(response)
   }
 
   return (
