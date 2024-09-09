@@ -69,6 +69,15 @@ function SingleEventPage({}: Props) {
 
         {!loading && <p>{event.location}</p>}
 
+        {/* {!loading && {event.attendees.map((attendee) => {
+          return <p>{attendee.username}</p>
+        })}} */}
+
+        <h1 className="underline text-xl">Attendees</h1>
+
+        {!loading && event.attendees.map((attendee) => {
+          return <p>{attendee.username}</p>
+        })}
 
         <div>
             <button onClick={joinEventHandler} className="p-2 bg-green-400 rounded-md">Join Event</button>
