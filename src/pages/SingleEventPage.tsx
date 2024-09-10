@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import authContext from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
+import AddToGoogleCalendarButton from "../components/AddToGoogleCalendarButton";
 
 type Props = {};
 
@@ -67,6 +68,8 @@ function SingleEventPage({}: Props) {
 
       <h1 className="underline text-xl">Attendees</h1>
 
+      {!isLoading && event && <AddToGoogleCalendarButton event={event}/>}
+
       {!isLoading &&
         event &&
         event.attendees.map((attendee) => {
@@ -90,6 +93,8 @@ function SingleEventPage({}: Props) {
         >
           Leave Event
         </button>
+
+       
       </div>
     </div>
   );
