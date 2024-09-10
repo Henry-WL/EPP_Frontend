@@ -76,6 +76,19 @@ function SingleEventPage({}: Props) {
           return <p>{attendee.username}</p>;
         })}
 
+        <div>
+          {!isLoading && event && 
+          <div>
+
+
+            <h1 className="text-3xl">{event.description}</h1>
+            <h1 className="text-3xl">{event.startDate}</h1>
+            <h1 className="text-3xl">{event.endDate}</h1>
+
+            </div>
+          }
+        </div>
+
       <div>
         
         <button
@@ -93,6 +106,8 @@ function SingleEventPage({}: Props) {
         >
           Leave Event
         </button>
+
+
 
        
       </div>

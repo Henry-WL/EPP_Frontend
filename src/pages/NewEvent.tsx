@@ -9,8 +9,8 @@ function NewEvent({}: Props) {
   const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("2024-09-11T14:00:00");
-  const [endDate, setEndDate] = useState<string>("'2024-09-11T16:00:00'");
+  const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
+  const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
   const { sendRequest } = useAxios();
 
   const navigate = useNavigate();

@@ -21,13 +21,15 @@ const formatGoogleCalendarDate = (date: string) => {
 const AddToGoogleCalendarButton: React.FC<Props> = ({ event }) => {
   const { name, location, description, startDate, endDate } = event;
 
+  console.log(event, 'event in comp')
+    
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-    'testname'
-  )}&dates=${formatGoogleCalendarDate('2024-09-11T14:00:00')}/${formatGoogleCalendarDate(
-    '2024-09-11T16:00:00'
+    name
+  )}&dates=${formatGoogleCalendarDate(startDate)}/${formatGoogleCalendarDate(
+    endDate
   )}&details=${encodeURIComponent(
-    'description'
-  )}&location=${encodeURIComponent('fakestreet')}`;
+    description
+  )}&location=${encodeURIComponent(location)}`;
 
   return (
     <a
