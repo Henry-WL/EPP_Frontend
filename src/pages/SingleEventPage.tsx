@@ -12,48 +12,46 @@ function SingleEventPage({}: Props) {
   const auth = useContext(authContext);
   const { response, error, isLoading, sendRequest } = useAxios();
 
-  console.log(auth)
-
-  console.log(eventId)
-
   useEffect(() => {
     const getSingleEvent = async () => {
-      const response = await sendRequest(`/events/${eventId}`)
+      const response = await sendRequest(`/events/${eventId}`);
       console.log(response.data.event);
       setEvent(response.data.event);
-      // kmkn
-
     };
 
     getSingleEvent();
   }, []);
 
   const joinEventHandler = async () => {
-    console.log(eventId);
-
-    const response = await axios.post(
-      `http://localhost:3000/api/events/join/${eventId}`,
-      {
-        userId: auth.userId,
-        username: auth.email,
-      }
-    );
+    const response = await sendRequest(`/events/join/${eventId}`, "POST", {
+      userId: auth.userId,
+      username: auth.email,
+    });
 
     console.log(response);
+
+    setEvent(response.data.foundEvent)
   };
 
   const leaveEventHandler = async () => {
-    console.log("first");
-
-    const response = await axios.post(
-      `http://localhost:3000/api/events/leave/${eventId}`,
-      {
-        userId: auth.userId,
-      }
-    );
+    const response = await sendRequest(`/events/leave/${eventId}`, "POST", {
+      userId: auth.userId,
+    });
 
     console.log(response);
+    setEvent(response.data.foundEvent)
+
   };
+
+  let disabledButton;
+
+  if (event) {
+     disabledButton = event.attendees.some((a) => a.userId === auth.userId)
+    console.log(disabledButton)
+  }
+
+
+  console.log(disabledButton)
 
   return (
     <div>
@@ -67,18 +65,20 @@ function SingleEventPage({}: Props) {
 
       {!isLoading && event && <p>{event.location}</p>}
 
-
       <h1 className="underline text-xl">Attendees</h1>
 
-      {!isLoading && event &&
+      {!isLoading &&
+        event &&
         event.attendees.map((attendee) => {
           return <p>{attendee.username}</p>;
         })}
 
       <div>
+        
         <button
           onClick={joinEventHandler}
           className="p-2 bg-green-400 rounded-md"
+          disabled={disabledButton}
         >
           Join Event
         </button>
@@ -86,6 +86,7 @@ function SingleEventPage({}: Props) {
         <button
           onClick={leaveEventHandler}
           className="p-2 bg-red-400 rounded-md"
+          disabled={!disabledButton}
         >
           Leave Event
         </button>
