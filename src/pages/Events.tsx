@@ -1,65 +1,53 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import EventCard from '../components/EventCard'
-import { useHttpClient } from '../components/hooks/http-hook'
+import React, { useEffect, useState } from "react";
+import EventCard from "../components/EventCard";
+import { useAxios } from "../components/hooks/useAxios";
 
-type Props = {}
+type Props = {};
 
 function Events({}: Props) {
-const [events, setEvents] = useState([])
-const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [events, setEvents] = useState([]);
 
+  const { sendRequest, response, isLoading, error } = useAxios();
 
-console.log('hello')
-
-useEffect(() => {
-    // const getEvents = async () => {
-    //     const response = await axios.get(`http://localhost:3000/events/`)
-    //     console.log(response)
-
-    //     setEvents(response.data.allEvents)
-    // }
-
-    // getEvents()
-
-
+  useEffect(() => {
     const fetchEvents = async () => {
-        try {
-            const responseData = await sendRequest('http://localhost:3000/events/')
-            console.log(responseData)
-            setEvents(responseData.allEvents)
-        }
+      try {
+        const responseData = await sendRequest("/events");
+        console.log(responseData);
+        setEvents(responseData.data.allEvents);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-        catch (err) {
-            console.log(err)
-        }
-
-    }
-    
-    fetchEvents()
-
-
-}, [sendRequest])
+    fetchEvents();
+  }, []);
 
   return (
     <div>
-        <h1>Events</h1>
+      <h1>Events</h1>
 
-        {isLoading && (
-            <div><h1 className='text-3xl'>Loading....</h1></div>
-        )}
-
-        {!isLoading &&
-        
-        <div className='flex gap-4'>
-            {events.map((event) => {
-                return <EventCard eventName={event.name} eventLocation={event.location} id={event._id}/>
-            })}
+      {isLoading && (
+        <div>
+          <h1 className="text-3xl">Loading....</h1>
         </div>
-        }
+      )}
 
+      {!isLoading && (
+        <div className="flex gap-4">
+          {events.map((event) => {
+            return (
+              <EventCard
+                eventName={event.name}
+                eventLocation={event.location}
+                id={event._id}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Events
+export default Events;

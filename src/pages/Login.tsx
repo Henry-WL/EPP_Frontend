@@ -3,64 +3,76 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import authContext from "../context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { useAxios } from "../components/hooks/useAxios";
 
 const Login = (props: Props) => {
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  // const [error, setError] = useState("");
 
-  const auth = useContext(authContext)
+  const auth = useContext(authContext);
   // const navigate = useNavigate()
-  console.log(auth)
+  console.log(auth);
+
+  const { sendRequest, response, isLoading, error } = useAxios();
+
+  // console.log(process.env.REACT_APP_BACKEND_URL, 'PROCESS');
+  // console.log(import.meta.env.VITE_BASE_URL, "PROCESS");
 
   const loginSignupHandler = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     try {
-      const response = await axios.post(`http://localhost:3000/user/login/`, 
-        {
-          "email": email,
-          "password": password
-        }
-      )
+      // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`,
+      //   {
+      //     "email": email,
+      //     "password": password
+      //   }
+      // )
 
-      console.log(response)
+      const response = await sendRequest("/user/login", "POST", {
+        email: email,
+        password: password,
+      });
 
-      auth.login(response.data.token, response.data.userId, response.data.email)
+      console.log(response);
+
+      auth.login(
+        response.data.token,
+        response.data.userId,
+        response.data.email
+      );
       // navigate('/')
-      
     } catch (err) {
-      console.log(err)
-      setError(err.response.data.message)
+      console.log(err);
+      setError(err.response.data.message);
     }
-  }
+  };
 
   const guestLogin = () => {
-    setEmail("henry@x.com")
-    setPassword("123456789")
+    setEmail("henry@x.com");
+    setPassword("123456789");
 
-    loginSignupHandler()
-  }
-
-
+    loginSignupHandler();
+  };
 
   return (
     <div className="flex min-h-screen">
+      {/* left */}
+      <div
+        className="w-1/2 flex flex-col justify-end"
+        style={{ backgroundColor: "#18181B" }}
+      >
+        {/* <h1 className="text-yellow-500">left</h1> */}
 
-        {/* left */}
-        <div className="w-1/2 flex flex-col justify-end" style={{backgroundColor: "#18181B"}}>
-            
-            
-            {/* <h1 className="text-yellow-500">left</h1> */}
-
-            <div className="">
-                <h1 className="text-white text-xl p-5 m-5">“The all in one event app, custom made for your company.”</h1>
-            </div>
+        <div className="">
+          <h1 className="text-white text-xl p-5 m-5">
+            “The all in one event app, custom made for your company.”
+          </h1>
         </div>
+      </div>
 
-
-
-        {/* right */}
+      {/* right */}
       <div className="w-1/2">
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -127,7 +139,6 @@ const Login = (props: Props) => {
                   {error && <p className="text-red-500">{error}</p>}
                 </div>
               </div>
-              
 
               <div>
                 <button
