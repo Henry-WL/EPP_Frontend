@@ -13,6 +13,7 @@ function NewEvent({}: Props) {
   const [description, setDescription] = useState<string>("");
 //   const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
   const [startDate, setStartDate] = useState<string>("");
+//   const [startTime, setStartTime] = useState<string>("T17:00:00")
 //   const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
   const [endDate, setEndDate] = useState<string>("");
   const { sendRequest } = useAxios();
@@ -98,7 +99,7 @@ function NewEvent({}: Props) {
             <input
               id="datestart"
               name="datestart"
-              type="date"
+              type="datetime-local"
               // required
               onChange={(e) => setStartDate(e.target.value)}
             //   autoComplete="email"
@@ -118,7 +119,7 @@ function NewEvent({}: Props) {
             <input
               id="dateend"
               name="dateend"
-              type="date"
+              type="datetime-local"
               // required
               onChange={(e) => setEndDate(e.target.value)}
               autoComplete="email"
