@@ -25,17 +25,17 @@ function NewEvent({}: Props) {
     console.log(startDate, 'startDate')
     console.log(endDate, 'endDate')
 
-    // const response = await sendRequest("/events", "POST", {
-    //   name: name,
-    //   location: location,
-    //   description: description,
-    //   startDate: startDate,
-    //   endDate: endDate
-    // });
+    const response = await sendRequest("/events", "POST", {
+      name: name,
+      location: location,
+      description: description,
+      startDate: startDate,
+      endDate: endDate
+    });
 
-    // console.log(response);
+    console.log(response);
 
-    // navigate("/events");
+    navigate("/events");
   };
 
   return (
