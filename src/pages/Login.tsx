@@ -40,7 +40,8 @@ const Login = (props: Props) => {
       auth.login(
         response.data.token,
         response.data.userId,
-        response.data.email
+        response.data.email,
+        response.data.isStaff
       );
       // navigate('/')
     } catch (err) {

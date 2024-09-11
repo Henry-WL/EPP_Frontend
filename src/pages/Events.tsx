@@ -7,7 +7,7 @@ type Props = {};
 function Events({}: Props) {
   const [events, setEvents] = useState([]);
 
-  const { sendRequest, response, isLoading, error } = useAxios();
+  const { sendRequest, response, isLoading, error } = useAxios();''
 
   useEffect(() => {
     const fetchEvents = async () => {

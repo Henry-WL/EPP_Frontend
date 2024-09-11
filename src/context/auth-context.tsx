@@ -8,16 +8,18 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState()
   const [email, setEmail] = useState()
+  const [isStaff, setIsStaff] = useState<string>()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   // const [username, setUsername] = useState()
   // const [avatarURL, setavatarURL] = useState()
   const navigate = useNavigate()
 
-  const login = (token, uid, email) => {
+  const login = (token, uid, email, isStaff) => {
     console.log(token);
     setToken(token);
     setUserId(uid)
     setEmail(email)
+    setIsStaff(isStaff)
     setIsLoggedIn(true);
     navigate('/')
 
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ login, setIsLoggedIn, isLoggedIn, logout, token, userId, email }}
+      value={{ login, setIsLoggedIn, isLoggedIn, logout, token, userId, email, isStaff }}
     >
       {children}
     </authContext.Provider>

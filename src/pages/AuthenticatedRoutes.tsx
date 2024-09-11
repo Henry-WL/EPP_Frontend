@@ -25,6 +25,7 @@ const AuthenticatedRoutes = () => {
           <div>
             <h1>Logged in</h1>
             <button onClick={() => auth.logout()}>logout</button>
+            <div>{auth.isStaff === 'true' && <button>newEvent</button>}</div>
           </div>
         }
       />
