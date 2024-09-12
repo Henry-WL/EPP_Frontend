@@ -6,6 +6,7 @@ import Events from "./Events";
 import NewEvent from "./NewEvent";
 import SingleEventPage from "./SingleEventPage";
 import Login from "./Login";
+import Index from "./Index";
 
 const AuthenticatedRoutes = () => {
   const auth = useContext(authContext);
@@ -21,13 +22,7 @@ const AuthenticatedRoutes = () => {
     <Routes>
       <Route
         path="/"
-        element={
-          <div>
-            <h1>Logged in</h1>
-            <button onClick={() => auth.logout()}>logout</button>
-            <div>{auth.isStaff === 'true' && <button>newEvent</button>}</div>
-          </div>
-        }
+        element={<Index/>}
       />
             <Route path='/login' element={<Login/>}/>
 

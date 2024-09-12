@@ -48,7 +48,7 @@ function SingleEventPage({}: Props) {
   console.log(disabledButton);
 
   return (
-    <div>
+    <div className="">
       {isLoading && <p className="text-3xl">Loading...</p>}
 
       <div>
