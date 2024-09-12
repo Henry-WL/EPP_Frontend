@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import authContext from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
@@ -28,10 +27,7 @@ function SingleEventPage({}: Props) {
       userId: auth.userId,
       username: auth.email,
     });
-
-    console.log(response);
-
-    setEvent(response.data.foundEvent)
+    setEvent(response.data.foundEvent);
   };
 
   const leaveEventHandler = async () => {
@@ -39,26 +35,21 @@ function SingleEventPage({}: Props) {
       userId: auth.userId,
     });
 
-    console.log(response);
-    setEvent(response.data.foundEvent)
-
+    setEvent(response.data.foundEvent);
   };
 
   let disabledButton;
 
   if (event) {
-     disabledButton = event.attendees.some((a) => a.userId === auth.userId)
-    console.log(disabledButton)
+    disabledButton = event.attendees.some((a) => a.userId === auth.userId);
+    console.log(disabledButton);
   }
 
-
-  console.log(disabledButton)
+  console.log(disabledButton);
 
   return (
     <div>
       {isLoading && <p className="text-3xl">Loading...</p>}
-
-      <h1>{eventId}</h1>
 
       <div>
         <img src="https://flowbite-react.com/images/blog/image-1.jpg" alt="" />
@@ -68,7 +59,7 @@ function SingleEventPage({}: Props) {
 
       <h1 className="underline text-xl">Attendees</h1>
 
-      {!isLoading && event && <AddToGoogleCalendarButton event={event}/>}
+      {!isLoading && event && <AddToGoogleCalendarButton event={event} />}
 
       {!isLoading &&
         event &&
@@ -76,21 +67,17 @@ function SingleEventPage({}: Props) {
           return <p>{attendee.username}</p>;
         })}
 
-        <div>
-          {!isLoading && event && 
+      <div>
+        {!isLoading && event && (
           <div>
-
-
             <h1 className="text-3xl">{event.description}</h1>
             <h1 className="text-3xl">{event.startDate}</h1>
             <h1 className="text-3xl">{event.endDate}</h1>
-
-            </div>
-          }
-        </div>
+          </div>
+        )}
+      </div>
 
       <div>
-        
         <button
           onClick={joinEventHandler}
           className="p-2 bg-green-400 rounded-md"
@@ -106,10 +93,6 @@ function SingleEventPage({}: Props) {
         >
           Leave Event
         </button>
-
-
-
-       
       </div>
     </div>
   );

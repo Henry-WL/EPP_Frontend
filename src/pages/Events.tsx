@@ -25,7 +25,7 @@ function Events({}: Props) {
 
   return (
     <div>
-      <h1>Events</h1>
+      {/* <h1>Events</h1> */}
 
       {isLoading && (
         <div>
@@ -34,12 +34,13 @@ function Events({}: Props) {
       )}
 
       {!isLoading && (
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap justify-center">
           {events.map((event) => {
             return (
               <EventCard
                 eventName={event.name}
                 eventLocation={event.location}
+                eventDescription={event.description}
                 id={event._id}
               />
             );
