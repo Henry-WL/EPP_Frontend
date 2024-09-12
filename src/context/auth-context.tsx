@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState()
   const [email, setEmail] = useState()
-  const [isStaff, setIsStaff] = useState<string>()
+  const [isStaff, setIsStaff] = useState<boolean>()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   // const [username, setUsername] = useState()
   // const [avatarURL, setavatarURL] = useState()
