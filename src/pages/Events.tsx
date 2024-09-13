@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import { useAxios } from "../components/hooks/useAxios";
+import CardComponent from "../components/cardComponent";
 
 type Props = {};
 
@@ -37,7 +38,7 @@ function Events({}: Props) {
         <div className="flex gap-4 flex-wrap justify-center">
           {events.map((event) => {
             return (
-              <EventCard
+              <CardComponent
                 eventName={event.name}
                 eventLocation={event.location}
                 eventDescription={event.description}

@@ -1,10 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
+type Props = {
+  eventName: string;
+  eventLocation: string;
+  eventDescription: string;
+  id: string;
+};
 
-const CardComponent = (props: Props) => {
+const CardComponent = ({
+  eventName,
+  eventLocation,
+  eventDescription,
+  id,
+}: Props) => {
+  const navigate = useNavigate();
   return (
-    <div>
+    <div onClick={() => navigate(`/event/${id}`)} className="cursor-pointer">
       <div className="card bg-base-100 w-96 shadow-xl">
         <figure>
           <img
@@ -14,12 +26,12 @@ const CardComponent = (props: Props) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            Shoes!
+            {eventName}
             <div className="badge badge-secondary">NEW</div>
           </h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <p>{eventDescription}</p>
           <div className="card-actions justify-end">
-            <div className="badge badge-outline">Fashion</div>
+            <div className="badge badge-outline">{eventLocation}</div>
             <div className="badge badge-outline">Products</div>
           </div>
         </div>

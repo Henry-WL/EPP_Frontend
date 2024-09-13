@@ -48,35 +48,12 @@ function SingleEventPage({}: Props) {
   console.log(disabledButton);
 
   return (
-    <div className="">
+    <div className="m-2">
       {isLoading && <p className="text-3xl">Loading...</p>}
 
       <div>
         <img src="https://flowbite-react.com/images/blog/image-1.jpg" alt="" />
       </div>
-
-      {!isLoading && event && <p>{event.location}</p>}
-
-      <h1 className="underline text-xl">Attendees</h1>
-
-      {!isLoading && event && <AddToGoogleCalendarButton event={event} />}
-
-      {!isLoading &&
-        event &&
-        event.attendees.map((attendee) => {
-          return <p>{attendee.username}</p>;
-        })}
-
-      <div>
-        {!isLoading && event && (
-          <div>
-            <h1 className="text-3xl">{event.description}</h1>
-            <h1 className="text-3xl">{event.startDate}</h1>
-            <h1 className="text-3xl">{event.endDate}</h1>
-          </div>
-        )}
-      </div>
-
       <div>
         <button
           onClick={joinEventHandler}
@@ -93,7 +70,33 @@ function SingleEventPage({}: Props) {
         >
           Leave Event
         </button>
+
+        <button
+          onClick={() => console.log("like")}
+          className="p-2 bg-pink-400 rounded-md"
+        >{`Like event <3`}</button>
       </div>
+
+      {!isLoading && event && <p>{event.location}</p>}
+
+      <div>
+        {!isLoading && event && (
+          <div>
+            <h1 className="text-3xl">{event.startDate}</h1>
+            <h1 className="text-3xl">{event.endDate}</h1>
+            <h1 className="text-3xl">{event.description}</h1>
+          </div>
+        )}
+      </div>
+
+      <h1 className="underline text-xl">Attendees</h1>
+
+      {!isLoading &&
+        event &&
+        event.attendees.map((attendee) => {
+          return <p>{attendee.username}</p>;
+        })}
+      {!isLoading && event && <AddToGoogleCalendarButton event={event} />}
     </div>
   );
 }

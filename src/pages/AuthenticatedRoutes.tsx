@@ -7,6 +7,7 @@ import NewEvent from "./NewEvent";
 import SingleEventPage from "./SingleEventPage";
 import Login from "./Login";
 import Index from "./Index";
+import ProfilePage from "./ProfilePage";
 
 const AuthenticatedRoutes = () => {
   const auth = useContext(authContext);
@@ -20,14 +21,11 @@ const AuthenticatedRoutes = () => {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Index/>}
-      />
-            <Route path='/login' element={<Login/>}/>
-
+      <Route path="/" element={<Index />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/events" element={<Events />} />
       <Route path="/newevent" element={<NewEvent />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="/event/:eventId" element={<SingleEventPage />} />
     </Routes>
   );
