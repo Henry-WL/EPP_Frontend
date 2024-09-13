@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
 
 export const useAxios = () => {
   const [response, setResponse] = useState();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendRequest = async (url, method = "GET", data, headers = {}) => {
+  const sendRequest = async (url:string, method = "GET", data?: object, headers = {}) => {
     setIsLoading(true)
     try {
         const axiosConfig = {
@@ -20,10 +20,14 @@ export const useAxios = () => {
       setIsLoading(false)
       return responseData;
     } catch (err) {
-      console.log(err);
-      setError(err);
-      setIsLoading(false);
-      throw err;
+        const axiosError = err as AxiosError
+        if (axiosError) {
+            setError(axiosError.message)
+            setIsLoading(false)
+            throw axiosError;
+        } else {
+            throw err
+        }
     }
   };
 

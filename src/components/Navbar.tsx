@@ -1,10 +1,13 @@
 import { useContext } from "react";
-import authContext from "../context/auth-context";
+import authContext, { AuthContextType } from "../context/auth-context";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Example() {
-  const auth = useContext(authContext);
-  const navigate = useNavigate();
+  const auth = useContext(authContext) as AuthContextType | null;
+
+  if (!auth) {
+    return <p>Loading...</p>
+  }
 
   console.log(auth);
   return (

@@ -1,23 +1,33 @@
-import { createContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const authContext = createContext();
 
+export interface AuthContextType {
+    token: string | null;
+    userId: string | undefined;
+    email: string | undefined;
+    isStaff: boolean | undefined;
+    isLoggedIn: boolean;
+    login: (token: string, userId: string, email: string, isStaff: boolean) => void;
+    logout: () => void;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState()
-  const [email, setEmail] = useState()
-  const [isStaff, setIsStaff] = useState<boolean>()
+const authContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider = ({ children }: {children: ReactNode}) => {
+  const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | undefined>(undefined)
+  const [email, setEmail] = useState<string | undefined>(undefined)
+  const [isStaff, setIsStaff] = useState<boolean | undefined>(undefined)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   // const [username, setUsername] = useState()
   // const [avatarURL, setavatarURL] = useState()
   const navigate = useNavigate()
 
-  const login = (token, uid, email, isStaff) => {
+  const login = (token: string, userId: string, email: string, isStaff: boolean) => {
     console.log(token);
     setToken(token);
-    setUserId(uid)
+    setUserId(userId)
     setEmail(email)
     setIsStaff(isStaff)
     setIsLoggedIn(true);
@@ -32,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ login, setIsLoggedIn, isLoggedIn, logout, token, userId, email, isStaff }}
+      value={{ login, isLoggedIn, logout, token, userId, email, isStaff }}
     >
       {children}
     </authContext.Provider>

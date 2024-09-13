@@ -6,7 +6,7 @@ interface Event {
   location: string;
   description: string;
   startDate: string; // Use ISO 8601 format (e.g., '2024-09-10T14:00:00')
-  endDate: string;   // Use ISO 8601 format (e.g., '2024-09-10T16:00:00')
+  endDate: string; // Use ISO 8601 format (e.g., '2024-09-10T16:00:00')
 }
 
 interface Props {
@@ -21,15 +21,13 @@ const formatGoogleCalendarDate = (date: string) => {
 const AddToGoogleCalendarButton: React.FC<Props> = ({ event }) => {
   const { name, location, description, startDate, endDate } = event;
 
-  console.log(event, 'event in comp')
-    
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     name
   )}&dates=${formatGoogleCalendarDate(startDate)}/${formatGoogleCalendarDate(
     endDate
-  )}&details=${encodeURIComponent(
-    description
-  )}&location=${encodeURIComponent(location)}`;
+  )}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(
+    location
+  )}`;
 
   return (
     <a
