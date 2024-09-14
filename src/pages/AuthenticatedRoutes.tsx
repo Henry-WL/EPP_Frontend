@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import authContext from "../context/auth-context";
+import authContext, { AuthContextType } from "../context/auth-context";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Example from "../components/Navbar";
 import Events from "./Events";
@@ -10,8 +10,12 @@ import Index from "./Index";
 import ProfilePage from "./ProfilePage";
 
 const AuthenticatedRoutes = () => {
-  const auth = useContext(authContext);
+    const auth = useContext(authContext) as AuthContextType | null;
   const navigate = useNavigate();
+
+  if (!auth) {
+    return <p>Loading...</p>
+  }
 
   useEffect(() => {
     if (!auth.isLoggedIn) {

@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
-import EventCard from "../components/EventCard";
+import { useEffect, useState } from "react";
 import { useAxios } from "../components/hooks/useAxios";
 import CardComponent from "../components/cardComponent";
+
+interface Event {
+  _id: string;
+  name: string;
+  location: string;
+  description: string;
+}
 
 type Props = {};
 
 function Events({}: Props) {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
 
-  const { sendRequest, response, isLoading, error } = useAxios();''
+  const { sendRequest, response, isLoading, error } = useAxios();
+  ("");
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -39,6 +46,7 @@ function Events({}: Props) {
           {events.map((event) => {
             return (
               <CardComponent
+                key={event._id}
                 eventName={event.name}
                 eventLocation={event.location}
                 eventDescription={event.description}
