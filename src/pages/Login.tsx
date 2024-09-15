@@ -19,6 +19,7 @@ const Login = (props: Props) => {
   // console.log(process.env.REACT_APP_BACKEND_URL, 'PROCESS');
   // console.log(import.meta.env.VITE_BASE_URL, "PROCESS");
 
+  // remove logs
   const loginSignupHandler = async (event) => {
     event.preventDefault();
 
