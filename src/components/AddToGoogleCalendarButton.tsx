@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Event {
-  id: string;
+  _id: string;
   name: string;
   location: string;
   description: string;

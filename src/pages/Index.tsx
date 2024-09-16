@@ -9,10 +9,10 @@ function Index({}: Props) {
   return (
     <div className="mt-2 flex flex-wrap gap-2 justify-center">
 
-    {/* <CardComponent/>
     <CardComponent/>
     <CardComponent/>
-    <CardComponent/> */}
+    <CardComponent/>
+    <CardComponent/>
       
     </div>
   );
