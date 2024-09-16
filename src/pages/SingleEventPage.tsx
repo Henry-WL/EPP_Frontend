@@ -16,7 +16,7 @@ interface Attendee {
 interface Event {
   _id: string;
   name: string;
-  attendees: Attendee[],
+  attendees: Attendee[];
   location: string;
   description: string;
   startDate: string;
@@ -29,10 +29,8 @@ function SingleEventPage({}: Props) {
   const auth = useContext(authContext) as AuthContextType | null;
   const { response, error, isLoading, sendRequest } = useAxios();
 
-
-
   if (!auth) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
 
   useEffect(() => {
@@ -65,15 +63,18 @@ function SingleEventPage({}: Props) {
     return <p>Loading event...</p>;
   }
 
+  const originalStartDateString = event.startDate;
+  const parsedStartDate = parseISO(originalStartDateString);
+  const formattedStartDate = format(parsedStartDate, "do MMMM yyyy, h:mm a", {
+    locale: enGB,
+  });
 
-
-  const originalDateString = event.startDate
-  console.log(originalDateString)
-  const parsedDate = parseISO(originalDateString);
-  console.log(parsedDate, 'parsedDate')
-  const formattedDate = format(parsedDate, "do MMMM yyyy", { locale: enGB });
-  console.log(formattedDate, 'form')
-
+  const originalEndDateString = event.endDate;
+  const parsedEndDate = parseISO(originalEndDateString);
+  console.log(parsedEndDate);
+  const formattedEndDate = format(parsedEndDate, "do MMMM yyyy, h:mm a", {
+    locale: enGB,
+  });
 
   let disabledButton;
 
@@ -89,19 +90,21 @@ function SingleEventPage({}: Props) {
       {isLoading && <p className="text-3xl">Loading...</p>}
 
       <div>
-        <img src="https://flowbite-react.com/images/blog/image-1.jpg" alt="" className="h-96 w-full rounded-md" />
+        <img
+          src="https://flowbite-react.com/images/blog/image-1.jpg"
+          alt=""
+          className="h-96 w-full rounded-md"
+        />
       </div>
-
 
       <h1>Hosted By...</h1>
 
       <div>
         {!isLoading && event && (
           <div>
-            <h1 className="text-3xl">{event.startDate}</h1>
-            <h2>{formattedDate}</h2>
-            <h1 className="text-3xl">{event.endDate}</h1>
-            <h1 className="text-3xl">{event.description}</h1>
+            <h1 className="text-xl">{formattedStartDate}</h1>
+            <h1 className="text-xl">{formattedEndDate}</h1>
+            <h1 className="text-xl">{event.description}</h1>
           </div>
         )}
       </div>
@@ -131,15 +134,19 @@ function SingleEventPage({}: Props) {
 
       {!isLoading && event && <p>{event.location}</p>}
 
-     
+      <div className="flex">
+        <div className="h-96 w-96 bg-red-500">MAP</div>
 
-      <h1 className="underline text-xl">Attendees</h1>
+        <div>
+          <h1 className="underline text-xl">Attendees</h1>
+          {!isLoading &&
+            event &&
+            event.attendees.map((attendee) => {
+              return <p>{attendee.username}</p>;
+            })}
+        </div>
+      </div>
 
-      {!isLoading &&
-        event &&
-        event.attendees.map((attendee) => {
-          return <p>{attendee.username}</p>;
-        })}
       {!isLoading && event && <AddToGoogleCalendarButton event={event} />}
     </div>
   );
