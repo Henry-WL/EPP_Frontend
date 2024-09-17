@@ -9,6 +9,8 @@ import { PiCalendarX } from "react-icons/pi";
 import { PiCalendarCheck } from "react-icons/pi";
 import { TbLocationCheck } from "react-icons/tb";
 import { TbCalendarClock } from "react-icons/tb";
+import { IoPricetagsOutline } from "react-icons/io5";
+
 
 type Props = {};
 
@@ -17,10 +19,15 @@ interface Attendee {
   username: string;
 }
 
+interface Tag {
+  tagName: string
+}
+
 interface Event {
   _id: string;
   name: string;
   attendees: Attendee[];
+  tags: Tag[];
   location: string;
   description: string;
   startDate: string;
@@ -88,12 +95,6 @@ function SingleEventPage({}: Props) {
     end: new Date(parsedEndDate),
   });
 
-  const startDate = new Date("2024-09-20");
-  const endDate = new Date("2024-09-27");
-
-  const duration = intervalToDuration({ start: startDate, end: endDate });
-  console.log(duration, "duration");
-
   console.log(timeBetweenDates, "time between dates");
 
   let disabledButton;
@@ -109,11 +110,11 @@ function SingleEventPage({}: Props) {
     <div className="m-2">
       {isLoading && <p className="text-3xl">Loading...</p>}
 
-      <div>
+      <div className="">
         <img
           src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F787493499%2F1149086973953%2F1%2Foriginal.20240611-155129?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=880b1ec98629e1e890e363f4e5c9a3f4"
           alt=""
-          className="h-96 w-full rounded-md"
+          className="rounded-md m-auto"
         />
       </div>
 
@@ -188,7 +189,17 @@ function SingleEventPage({}: Props) {
         <h1 className="font-extrabold text-2xl">Tags</h1>
 
         <div className="mt-2 flex gap-2 items-center">
-          <PiCalendarCheck size={20} />
+        <IoPricetagsOutline size={20}/>
+
+        {event.tags.map((tag) => {
+          return (
+            <div className="bg-gray-100 rounded-xl p-2">
+
+              <p>{tag}</p>
+            </div>
+          )
+        })}
+
 
 
         {/* map over tags */}
@@ -228,8 +239,6 @@ function SingleEventPage({}: Props) {
           className="p-2 bg-pink-400 rounded-md"
         >{`Like event <3`}</button>
       </div>
-
-      {!isLoading && event && <p>{event.location}</p>}
 
       <div className="flex">
         <div className="h-96 w-96 bg-red-500">MAP</div>
