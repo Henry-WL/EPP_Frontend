@@ -10,7 +10,7 @@ import { PiCalendarCheck } from "react-icons/pi";
 import { TbLocationCheck } from "react-icons/tb";
 import { TbCalendarClock } from "react-icons/tb";
 import { IoPricetagsOutline } from "react-icons/io5";
-
+import LoadingSpinner from "../components/LoadingSpinner";
 
 type Props = {};
 
@@ -20,7 +20,7 @@ interface Attendee {
 }
 
 interface Tag {
-  tagName: string
+  tagName: string;
 }
 
 interface Event {
@@ -42,7 +42,7 @@ function SingleEventPage({}: Props) {
   const { response, error, isLoading, sendRequest } = useAxios();
 
   if (!auth) {
-    return <p>Loading...</p>;
+    return <span className="loading loading-spinner loading-lg"></span>
   }
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function SingleEventPage({}: Props) {
   };
 
   if (isLoading || !event) {
-    return <p>Loading event...</p>;
+    return <LoadingSpinner/>
   }
 
   const originalStartDateString = event.startDate;
@@ -131,135 +131,125 @@ function SingleEventPage({}: Props) {
       </div>
 
       <div className="w-full justify-center sm:flex">
+        {/* main div */}
 
-      {/* main div */}
-      
+        <div className="max-w-3xl">
+          {/* left div */}
 
-      <div className="max-w-3xl">
+          <div className="p-2 my-4">
+            {/* <h1 className="text-2xl p-2 mx-10 my-4">{event.name}</h1> */}
+            <h1 className="font-semibold">{formattedStartDate}</h1>
 
-        {/* left div */}
+            <h1 className="text-3xl font-extrabold pt-2">{event.name}</h1>
 
+            <p className="font pt-2">{event.description}</p>
 
-      <div className="p-2 my-4">
-        {/* <h1 className="text-2xl p-2 mx-10 my-4">{event.name}</h1> */}
-        <h1 className="font-semibold">{formattedStartDate}</h1>
-
-        <h1 className="text-3xl font-extrabold pt-2">{event.name}</h1>
-
-        <p className="font pt-2">{event.description}</p>
-
-        {/* <h1>Hosted By...</h1> */}
-      </div>
-
-      <div className="p-2 my-4">
-        <h1 className="font-extrabold text-2xl">Date and time</h1>
-
-        <div className="mt-2 flex gap-2 items-center">
-          <PiCalendarCheck size={20} />
-
-          <h1 className="font">
-            {formattedStartDate} - {formattedEndDate}
-          </h1>
-        </div>
-      </div>
-
-      <div className="p-2 my-4">
-        <h1 className="font-extrabold text-2xl">Location</h1>
-
-        <div className="mt-2 flex gap-2 items-center">
-          <TbLocationCheck size={20} />
-
-          <div>
-            <h1 className="font">{event.location}</h1>
-            <p
-              className="text-xs font-semibold text-blue-500 cursor-pointer"
-              onClick={() => setShowMap(!showMap)}
-            >
-              {showMap ? "Hide map" : "Show map"}
-            </p>
+            {/* <h1>Hosted By...</h1> */}
           </div>
 
-          {showMap && <p>Showing map.....</p>}
-        </div>
-      </div>
+          <div className="p-2 my-4">
+            <h1 className="font-extrabold text-2xl">Date and time</h1>
 
-      <div className="p-2 my-4">
-        <h1 className="font-extrabold text-2xl">About this event</h1>
+            <div className="mt-2 flex gap-2 items-center">
+              <PiCalendarCheck size={20} />
 
-        <div className="mt-2 flex gap-2 items-center">
-          <TbCalendarClock size={20} color="green" />
-
-          <h1 className="font">
-            {`Duration ${Object.values(timeBetweenDates)} ${Object.keys(timeBetweenDates)}`}
-          </h1>
-        </div>
-      </div>
-
-      <div className="p-2 my-4">
-        <h1 className="font-extrabold text-2xl">Tags</h1>
-
-        <div className="mt-2 flex gap-2 items-center">
-        <IoPricetagsOutline size={20}/>
-
-        {event.tags.map((tag) => {
-          return (
-            <div className="bg-gray-100 rounded-xl p-2">
-
-              <p>{tag}</p>
+              <h1 className="font">
+                {formattedStartDate} - {formattedEndDate}
+              </h1>
             </div>
-          )
-        })}
+          </div>
+
+          <div className="p-2 my-4">
+            <h1 className="font-extrabold text-2xl">Location</h1>
+
+            <div className="mt-2 flex gap-2 items-center">
+              <TbLocationCheck size={20} />
+
+              <div>
+                <h1 className="font">{event.location}</h1>
+                <p
+                  className="text-xs font-semibold text-blue-500 cursor-pointer"
+                  onClick={() => setShowMap(!showMap)}
+                >
+                  {showMap ? "Hide map" : "Show map"}
+                </p>
+              </div>
+
+              {showMap && <p>Showing map.....</p>}
+            </div>
+          </div>
+
+          <div className="p-2 my-4">
+            <h1 className="font-extrabold text-2xl">About this event</h1>
+
+            <div className="mt-2 flex gap-2 items-center">
+              <TbCalendarClock size={20} color="green" />
+
+              <h1 className="font">
+                {`Duration ${Object.values(timeBetweenDates)} ${Object.keys(
+                  timeBetweenDates
+                )}`}
+              </h1>
+            </div>
+          </div>
+
+          <div className="p-2 my-4">
+            <h1 className="font-extrabold text-2xl">Tags</h1>
+
+            <div className="mt-2 flex gap-2 items-center">
+              <IoPricetagsOutline size={20} />
+
+              {event.tags.map((tag) => {
+                return (
+                  <div className="bg-gray-100 rounded-xl p-2">
+                    <p>{tag}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
 
+        <div className="min-w-96">
+          {/* right div */}
 
+          <div className="border-2 border-gray-500 p-1 rounded-md">
+            <button
+              onClick={joinEventHandler}
+              className="p-2 bg-green-400 rounded-md"
+              disabled={disabledButton}
+            >
+              Join Event
+            </button>
 
-      </div>
+            <button
+              onClick={leaveEventHandler}
+              className="p-2 bg-red-400 rounded-md"
+              disabled={!disabledButton}
+            >
+              Leave Event
+            </button>
 
-      <div>
+            <button
+              onClick={() => console.log("like")}
+              className="p-2 bg-pink-400 rounded-md"
+            >{`Like event <3`}</button>
+          </div>
 
-        {/* right div */}
+          <div className="flex">
+            {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
 
-      <div className="border-2 border-gray-500 p-1 rounded-md">
-        <button
-          onClick={joinEventHandler}
-          className="p-2 bg-green-400 rounded-md"
-          disabled={disabledButton}
-        >
-          Join Event
-        </button>
-
-        <button
-          onClick={leaveEventHandler}
-          className="p-2 bg-red-400 rounded-md"
-          disabled={!disabledButton}
-        >
-          Leave Event
-        </button>
-
-        <button
-          onClick={() => console.log("like")}
-          className="p-2 bg-pink-400 rounded-md"
-        >{`Like event <3`}</button>
-      </div>
-
-      <div className="flex">
-        {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
-
-        <div>
-          <h1 className="underline text-xl">Attendees</h1>
-          {!isLoading &&
-            event &&
-            event.attendees.map((attendee) => {
-              return <p>{attendee.username}</p>;
-            })}
+            <div>
+              <h1 className="underline text-xl">Attendees</h1>
+              {!isLoading &&
+                event &&
+                event.attendees.map((attendee) => {
+                  return <p>{attendee.username}</p>;
+                })}
+            </div>
+          </div>
+          <AddToGoogleCalendarButton event={event}/>
         </div>
-
-        
-      </div>
-
-      </div>
-
       </div>
 
       {/* <div>
@@ -271,8 +261,6 @@ function SingleEventPage({}: Props) {
           </div>
         )}
       </div> */}
-
-
     </div>
   );
 }
