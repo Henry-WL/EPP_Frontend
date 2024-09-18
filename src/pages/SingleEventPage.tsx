@@ -130,6 +130,16 @@ function SingleEventPage({}: Props) {
         </div>
       </div>
 
+      <div className="w-full justify-center sm:flex">
+
+      {/* main div */}
+      
+
+      <div className="max-w-3xl">
+
+        {/* left div */}
+
+
       <div className="p-2 my-4">
         {/* <h1 className="text-2xl p-2 mx-10 my-4">{event.name}</h1> */}
         <h1 className="font-semibold">{formattedStartDate}</h1>
@@ -199,23 +209,16 @@ function SingleEventPage({}: Props) {
             </div>
           )
         })}
-
-
-
-        {/* map over tags */}
-       
         </div>
       </div>
 
-      {/* <div>
-        {!isLoading && event && (
-          <div>
-            <h1 className="text-xl">{formattedStartDate}</h1>
-            <h1 className="text-xl">{formattedEndDate}</h1>
-            <h1 className="text-xl">{event.description}</h1>
-          </div>
-        )}
-      </div> */}
+
+
+      </div>
+
+      <div>
+
+        {/* right div */}
 
       <div className="border-2 border-gray-500 p-1 rounded-md">
         <button
@@ -241,7 +244,7 @@ function SingleEventPage({}: Props) {
       </div>
 
       <div className="flex">
-        <div className="h-96 w-96 bg-red-500">MAP</div>
+        {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
 
         <div>
           <h1 className="underline text-xl">Attendees</h1>
@@ -251,9 +254,25 @@ function SingleEventPage({}: Props) {
               return <p>{attendee.username}</p>;
             })}
         </div>
+
+        
       </div>
 
-      {!isLoading && event && <AddToGoogleCalendarButton event={event} />}
+      </div>
+
+      </div>
+
+      {/* <div>
+        {!isLoading && event && (
+          <div>
+            <h1 className="text-xl">{formattedStartDate}</h1>
+            <h1 className="text-xl">{formattedEndDate}</h1>
+            <h1 className="text-xl">{event.description}</h1>
+          </div>
+        )}
+      </div> */}
+
+
     </div>
   );
 }
