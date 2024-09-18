@@ -8,6 +8,7 @@ import SingleEventPage from "./SingleEventPage";
 import Login from "./Login";
 import Index from "./Index";
 import ProfilePage from "./ProfilePage";
+import MyEvents from "./MyEvents";
 
 const AuthenticatedRoutes = () => {
     const auth = useContext(authContext) as AuthContextType | null;
@@ -30,6 +31,7 @@ const AuthenticatedRoutes = () => {
       <Route path="/events" element={<Events />} />
       <Route path="/newevent" element={<NewEvent />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/myevents" element={<MyEvents/>}/>
       <Route path="/event/:eventId" element={<SingleEventPage />} />
     </Routes>
   );

@@ -56,12 +56,17 @@ export default function Example() {
             <li>
               <Link className="justify-between" to={'/profile'}>
                 Profile
-                <span className="badge">New</span>
               </Link>
             </li>
             <li>
-              <a>Settings</a>
+            <Link className="justify-between" to={'/myevents'}>
+                My Events
+                <span className="badge">New</span>
+              </Link>
             </li>
+            {/* <li>
+              <a>Settings</a>
+            </li> */}
             <li onClick={() => auth.logout()}>
               <a>Logout</a>
             </li>
