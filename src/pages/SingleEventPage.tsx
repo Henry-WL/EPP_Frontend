@@ -106,6 +106,17 @@ function SingleEventPage({}: Props) {
 
   console.log(disabledButton);
 
+  const checkEventPastDate = (startDate: string) => {
+    let currentDate = new Date();
+    let eventStartDate = new Date(startDate);
+
+    if (currentDate > eventStartDate) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div className="m-2">
       {isLoading && <p className="text-3xl">Loading...</p>}
@@ -118,6 +129,9 @@ function SingleEventPage({}: Props) {
         />
       </div>
 
+
+
+      {  checkEventPastDate(event.startDate) ? 
       <div className="w-full">
         <div className="border-2 bg-yellow-50 border-yellow-400 rounded-md mx-10 my-4 p-2 h-14 flex gap-4 items-center">
           <div className="pl-2">
@@ -128,7 +142,9 @@ function SingleEventPage({}: Props) {
             <h3 className="font-light">Sales Ended</h3>
           </div>
         </div>
-      </div>
+      </div> : null
+
+      }
 
       <div className="w-full justify-center sm:flex">
         {/* main div */}

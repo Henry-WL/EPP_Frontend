@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import authContext, { AuthContextType } from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import CardComponent from "../components/cardComponent";
 
 type Props = {};
 
@@ -42,28 +43,52 @@ function MyEvents({}: Props) {
   }, []);
 
   if (isLoading) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />;
   }
 
-  const checkEventPastDate = (startDate) => {
-    let currentDate = new Date()
-    let eventStartDate = new Date(startDate)
+  const checkEventPastDate = (startDate: string) => {
+    let currentDate = new Date();
+    let eventStartDate = new Date(startDate);
 
     if (currentDate > eventStartDate) {
-        return true
+      return true;
     } else {
-        return false
+      return false;
     }
-
-  }
+  };
 
   return (
-    <div>
-      MyEvents
-      {events.map((event) => {
-        const compareDate = event.startDate
-        return <h1 key={event._id} className={checkEventPastDate(event.startDate) ? 'line-through' : ''}>{event.name}</h1>
-      })}
+    <div className="m-2">
+      <div className="flex flex-wrap gap-4 justify-center">
+        {events.map((event) => {
+          const compareDate = event.startDate;
+          return (
+            <div
+              key={event._id}
+              className={` ${
+                checkEventPastDate(event.startDate) ? "opacity-50" : ""
+              }
+            
+          `}
+            >
+              {/* <h1
+                className={
+                  checkEventPastDate(event.startDate) ? "line-through" : ""
+                }
+              >
+                {event.name}
+              </h1> */}
+              <CardComponent
+                key={event._id}
+                eventName={event.name}
+                eventLocation={event.location}
+                eventDescription={event.description}
+                id={event._id}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

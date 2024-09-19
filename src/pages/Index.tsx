@@ -13,7 +13,7 @@ function Index({}: Props) {
     <div>
       <div className="flex justify-around">
         <div className="flex gap-4">
-          <button className="btn md:btn-md lg:btn-lg" onClick={() => navigate('/profile')}>
+          <button className="btn md:btn-md lg:btn-lg" onClick={() => navigate('/myevents')}>
             My events
           </button>
           <button className="btn md:btn-md lg:btn-lg">

@@ -23,12 +23,12 @@ const CardComponent = ({
             alt="Shoes"
           />
         </figure>
-        <div className="card-body">
+        <div className="card-body min-h-52">
           <h2 className="card-title">
             {eventName}
             <div className="badge badge-secondary">NEW</div>
           </h2>
-          <p>{eventDescription}</p>
+          <p>{eventDescription ? eventDescription.slice(0,75) : '...'}...</p>
           <div className="card-actions justify-end">
             <div className="badge badge-outline">{eventLocation}</div>
             <div className="badge badge-outline">Products</div>
