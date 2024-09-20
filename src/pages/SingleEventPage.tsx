@@ -142,7 +142,7 @@ function SingleEventPage({}: Props) {
             <h3 className="font-light">Sales Ended</h3>
           </div>
         </div>
-      </div> : null
+      </div> : <div className="mx-10 my-4"></div>
 
       }
 
