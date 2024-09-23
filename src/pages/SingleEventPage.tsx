@@ -109,6 +109,7 @@ function SingleEventPage({}: Props) {
   const checkEventPastDate = (startDate: string) => {
     let currentDate = new Date();
     let eventStartDate = new Date(startDate);
+
     
 
     if (currentDate > eventStartDate) {
