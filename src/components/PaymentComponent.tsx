@@ -103,10 +103,10 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPr
 };
 
 // Wrap the form with Stripe's Elements provider
-const paymentApp: React.FC<{ ticketPrice: number }> = ({ ticketPrice }) => (
+const App: React.FC<{ ticketPrice: number }> = ({ ticketPrice }) => (
   <Elements stripe={stripePromise}>
     <TicketPurchaseForm ticketPrice={ticketPrice} />
   </Elements>
 );
 
-export default paymentApp;
+export default App;

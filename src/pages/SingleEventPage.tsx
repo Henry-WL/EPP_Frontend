@@ -11,6 +11,8 @@ import { TbLocationCheck } from "react-icons/tb";
 import { TbCalendarClock } from "react-icons/tb";
 import { IoPricetagsOutline } from "react-icons/io5";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { TicketPurchaseForm } from "./PaymentPage";
+import App from "../components/PaymentComponent";
 
 type Props = {};
 
@@ -32,6 +34,7 @@ interface Event {
   description: string;
   startDate: string;
   endDate: string;
+  ticketPrice: number;
 }
 
 function SingleEventPage({}: Props) {
@@ -110,7 +113,7 @@ function SingleEventPage({}: Props) {
     let currentDate = new Date();
     let eventStartDate = new Date(startDate);
 
-    
+
 
     if (currentDate > eventStartDate) {
       return true;
@@ -231,28 +234,34 @@ function SingleEventPage({}: Props) {
         <div className="min-w-96">
           {/* right div */}
 
-          <div className="border-2 border-gray-500 p-1 rounded-md">
-            <button
-              onClick={joinEventHandler}
-              className="p-2 bg-green-400 rounded-md"
-              disabled={disabledButton}
-            >
-              Join Event
-            </button>
+          {event.ticketPrice <= 0 && 
+           <div className="border-2 border-gray-500 p-1 rounded-md">
+           <button
+             onClick={joinEventHandler}
+             className="p-2 bg-green-400 rounded-md"
+             disabled={disabledButton}
+           >
+             Join Event
+           </button>
 
-            <button
-              onClick={leaveEventHandler}
-              className="p-2 bg-red-400 rounded-md"
-              disabled={!disabledButton}
-            >
-              Leave Event
-            </button>
+           <button
+             onClick={leaveEventHandler}
+             className="p-2 bg-red-400 rounded-md"
+             disabled={!disabledButton}
+           >
+             Leave Event
+           </button>
 
-            <button
-              onClick={() => console.log("like")}
-              className="p-2 bg-pink-400 rounded-md"
-            >{`Like event <3`}</button>
-          </div>
+           <button
+             onClick={() => console.log("like")}
+             className="p-2 bg-pink-400 rounded-md"
+           >{`Like event <3`}</button>
+         </div>
+          }
+
+          {event.ticketPrice > 0 && <App/>}
+
+         
 
           <div className="flex">
             {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
@@ -266,6 +275,8 @@ function SingleEventPage({}: Props) {
                 })}
             </div>
           </div>
+
+          {/* if user is in attendee list, show add to g calendar */}
           <AddToGoogleCalendarButton event={event}/>
         </div>
       </div>
