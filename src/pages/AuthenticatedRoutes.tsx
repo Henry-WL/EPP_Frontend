@@ -9,6 +9,7 @@ import Login from "./Login";
 import Index from "./Index";
 import ProfilePage from "./ProfilePage";
 import MyEvents from "./MyEvents";
+import PaymentPage from "./PaymentPage";
 
 const AuthenticatedRoutes = () => {
     const auth = useContext(authContext) as AuthContextType | null;
@@ -33,6 +34,7 @@ const AuthenticatedRoutes = () => {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/myevents" element={<MyEvents/>}/>
       <Route path="/event/:eventId" element={<SingleEventPage />} />
+      <Route path="/payment" element={<PaymentPage/>} />
     </Routes>
   );
 };
