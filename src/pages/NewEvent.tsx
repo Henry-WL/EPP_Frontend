@@ -12,6 +12,7 @@ function NewEvent({}: Props) {
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [ticketPrice, setTicketPrice] = useState<string>("0")
+  const [tags, setTags] = useState<string>("")
 //   const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
   const [startDate, setStartDate] = useState<string>("");
 //   const [startTime, setStartTime] = useState<string>("T17:00:00")
@@ -26,6 +27,8 @@ function NewEvent({}: Props) {
 
     console.log(startDate, 'startDate')
     console.log(endDate, 'endDate')
+    const tagsArr = tags.split(',').map(tag => tag.trim())
+    console.log(tagsArr)
 
     const response = await sendRequest("/events", "POST", {
       name: name,
@@ -33,7 +36,8 @@ function NewEvent({}: Props) {
       description: description,
       startDate: startDate,
       endDate: endDate,
-      ticketPrice: ticketPrice
+      ticketPrice: ticketPrice,
+      tagsArr: tagsArr
     });
 
     console.log(response);
@@ -168,6 +172,26 @@ function NewEvent({}: Props) {
               // required
               onChange={(e) => setTicketPrice(e.target.value)}
               autoComplete="email"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="tags"
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >
+            Tags
+          </label>
+          <div className="mt-2">
+            <input
+              id="tags"
+              name="tags"
+              type="string"
+              // required
+              onChange={(e) => setTags(e.target.value)}
+            //   autoComplete="email"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
             />
           </div>
