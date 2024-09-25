@@ -121,7 +121,9 @@ function SingleEventPage({}: Props) {
     }
   };
 
-  const userIsAttending = event.attendees.some(attendee => attendee.userId === auth.userId);
+  const userIsAttending = event.attendees.some(
+    (attendee) => attendee.userId === auth.userId
+  );
 
   return (
     <div className="m-2">
@@ -257,9 +259,7 @@ function SingleEventPage({}: Props) {
                 className="p-2 bg-pink-400 rounded-md"
               >{`Like event <3`}</button>
             </div>
-          )} 
-
-          
+          )}
 
           {userIsAttending && (
             <div className="border-2 border-gray-500 p-1 rounded-md">
@@ -287,7 +287,7 @@ function SingleEventPage({}: Props) {
           )}
 
           {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
-          {event.ticketPrice > 0 && !paymentSucess && !userIsAttending &&  (
+          {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
             <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} />
           )}
 
@@ -332,7 +332,8 @@ function SingleEventPage({}: Props) {
           </div>
 
           {/* if user is in attendee list, show add to g calendar */}
-          <AddToGoogleCalendarButton event={event} />
+          {userIsAttending && <AddToGoogleCalendarButton event={event} />}
+          {/* <AddToGoogleCalendarButton event={event} /> */}
         </div>
       </div>
 
