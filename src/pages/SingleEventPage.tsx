@@ -234,7 +234,7 @@ function SingleEventPage({}: Props) {
         <div className="min-w-96">
           {/* right div */}
 
-          {event.ticketPrice <= 0 && (
+          {event.ticketPrice <= 0 && !userIsAttending && (
             <div className="border-2 border-gray-500 p-1 rounded-md">
               <button
                 onClick={joinEventHandler}

@@ -6,6 +6,22 @@ import { useAxios } from "../components/hooks/useAxios";
 
 type Props = {};
 
+interface Attendee {
+    userId: string;
+    username: string;
+}
+
+interface Event {
+    _id: string;
+    name: string;
+    attendees: Attendee[],
+    location: string;
+    description: string;
+    startDate: string;
+    tags: string[];
+    endDate: string;
+  }
+
 function Index({}: Props) {
   const auth = useContext(authContext);
   const navigate = useNavigate()

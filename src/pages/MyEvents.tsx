@@ -12,14 +12,15 @@ interface Attendee {
 }
 
 interface Event {
-  _id: string;
-  name: string;
-  attendees: Attendee[];
-  location: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
+    _id: string;
+    name: string;
+    attendees: Attendee[],
+    location: string;
+    description: string;
+    startDate: string;
+    tags: string[];
+    endDate: string;
+  }
 
 function MyEvents({}: Props) {
   const [events, setEvents] = useState<Event[]>([]);
@@ -83,6 +84,7 @@ function MyEvents({}: Props) {
                 eventName={event.name}
                 eventLocation={event.location}
                 eventDescription={event.description}
+                tags={event.tags}
                 id={event._id}
               />
             </div>

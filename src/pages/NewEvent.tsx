@@ -162,7 +162,7 @@ function NewEvent({}: Props) {
             htmlFor="ticketprice"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Ticket Price
+            Ticket Price (0 for free event)
           </label>
           <div className="mt-2">
             <input
@@ -182,7 +182,7 @@ function NewEvent({}: Props) {
             htmlFor="tags"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Tags
+            Tags (Seperate by comma)
           </label>
           <div className="mt-2">
             <input
