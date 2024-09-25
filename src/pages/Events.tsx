@@ -2,11 +2,20 @@ import { useEffect, useState } from "react";
 import { useAxios } from "../components/hooks/useAxios";
 import CardComponent from "../components/cardComponent";
 
+interface Attendee {
+    userId: string;
+    username: string;
+}
+
 interface Event {
   _id: string;
   name: string;
+  attendees: Attendee[],
   location: string;
   description: string;
+  startDate: string;
+  tags: string[];
+  endDate: string;
 }
 
 type Props = {};
@@ -50,6 +59,7 @@ function Events({}: Props) {
                 eventName={event.name}
                 eventLocation={event.location}
                 eventDescription={event.description}
+                tags={event.tags}
                 id={event._id}
               />
             );

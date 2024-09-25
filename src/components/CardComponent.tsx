@@ -4,6 +4,7 @@ type Props = {
   eventName: string;
   eventLocation: string;
   eventDescription: string;
+  tags: string[]
   id: string;
 };
 
@@ -11,9 +12,11 @@ const CardComponent = ({
   eventName,
   eventLocation,
   eventDescription,
+  tags,
   id,
 }: Props) => {
   const navigate = useNavigate();
+  console.log(tags, 'tags')
   return (
     <div onClick={() => navigate(`/event/${id}`)} className="cursor-pointer">
       <div className="card bg-base-100 w-96 shadow-xl">
@@ -30,8 +33,12 @@ const CardComponent = ({
           </h2>
           <p>{eventDescription ? eventDescription.slice(0,75) : '...'}...</p>
           <div className="card-actions justify-end">
-            <div className="badge badge-outline">{eventLocation}</div>
-            <div className="badge badge-outline">Products</div>
+
+            {tags.slice(0,4).map((tag) => {
+                return (<div className="badge badge-outline">{tag}</div>)
+            })}
+            {/* <div className="badge badge-outline">{eventLocation}</div>
+            <div className="badge badge-outline">Products</div> */}
           </div>
         </div>
       </div>

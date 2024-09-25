@@ -1,14 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import authContext from "../context/auth-context";
 import CardComponent from "../components/cardComponent";
 import { useNavigate } from "react-router-dom";
+import { useAxios } from "../components/hooks/useAxios";
 
 type Props = {};
 
 function Index({}: Props) {
   const auth = useContext(authContext);
-
   const navigate = useNavigate()
+
+  const [events, setEvents] = useState<Event[]>([]);
+
+  const { sendRequest, response, isLoading, error } = useAxios();
+  ("");
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const responseData = await sendRequest("/events");
+        console.log(responseData);
+        setEvents(responseData.data.allEvents);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <div>
       <div className="flex justify-around">
@@ -35,10 +55,18 @@ function Index({}: Props) {
       <div className="mt-2 flex flex-wrap gap-2 justify-center">
         <div></div>
 
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
+        {events.slice(0,3).map((event) => {
+            return (
+                <CardComponent
+                  key={event._id}
+                  eventName={event.name}
+                  eventLocation={event.location}
+                  eventDescription={event.description}
+                  tags={event.tags}
+                  id={event._id}
+                />
+              );
+        })}
       </div>
     </div>
   );
