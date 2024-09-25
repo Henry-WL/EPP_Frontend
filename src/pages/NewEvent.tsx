@@ -4,19 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
 import DateTimePicker from "../components/DateTimePicker";
 
-
 type Props = {};
 
 function NewEvent({}: Props) {
   const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [ticketPrice, setTicketPrice] = useState<string>("0")
-  const [tags, setTags] = useState<string>("")
-//   const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
+  const [ticketPrice, setTicketPrice] = useState<string>("0");
+  const [tags, setTags] = useState<string>("");
+  // const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
   const [startDate, setStartDate] = useState<string>("");
-//   const [startTime, setStartTime] = useState<string>("T17:00:00")
-//   const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
+  // const [startTime, setStartTime] = useState<string>("T17:00:00");
+  // const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
   const [endDate, setEndDate] = useState<string>("");
   const { sendRequest } = useAxios();
 
@@ -25,11 +24,15 @@ function NewEvent({}: Props) {
   const eventSubmitHandler = async (e) => {
     e.preventDefault();
 
-    console.log(startDate, 'startDate')
-    console.log(endDate, 'endDate')
-    const tagsArr = tags.split(',').map(tag => tag.trim())
-    console.log(tagsArr)
+    // Log start and end dates for debugging
+    console.log(startDate, "startDate");
+    console.log(endDate, "endDate");
 
+    // Split tags string into array, trimming any extra spaces
+    const tagsArr = tags.split(",").map((tag) => tag.trim());
+    console.log(tagsArr);
+
+    // Send event data to the server
     const response = await sendRequest("/events", "POST", {
       name: name,
       location: location,
@@ -37,171 +40,144 @@ function NewEvent({}: Props) {
       startDate: startDate,
       endDate: endDate,
       ticketPrice: ticketPrice,
-      tagsArr: tagsArr
+      tagsArr: tagsArr,
     });
 
     console.log(response);
 
+    // Navigate to events page after submission
     navigate("/events");
   };
 
   return (
-    <div className="m-2">
-
-       
-      <form
-        onSubmit={(e) => {
-          eventSubmitHandler(e);
-        }}
-      >
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Name
+    <div className="max-w-3xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
+      <h2 className="text-3xl font-bold text-center mb-6">Create New Event</h2>
+      <form onSubmit={eventSubmitHandler}>
+        {/* Event Name */}
+        <div className="form-control mb-4">
+          <label htmlFor="name" className="label">
+            <span className="label-text">Event Name</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="name"
-              name="name"
-              type="text"
-              // required
-              onChange={(e) => setName(e.target.value)}
-              //   autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter event name"
+            // required
+          />
         </div>
 
-        <div>
-          <label
-            htmlFor="location"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Location
+        {/* Location */}
+        <div className="form-control mb-4">
+          <label htmlFor="location" className="label">
+            <span className="label-text">Location</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="location"
-              name="location"
-              type="text"
-              // required
-              onChange={(e) => setLocation(e.target.value)}
-              autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter event location"
+            autoComplete="email"
+            // required
+          />
         </div>
 
-        <div>
-          <label
-            htmlFor="datestart"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Date Start
+        {/* Start Date */}
+        <div className="form-control mb-4">
+          <label htmlFor="datestart" className="label">
+            <span className="label-text">Start Date & Time</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="datestart"
-              name="datestart"
-              type="datetime-local"
-              // required
-              onChange={(e) => setStartDate(e.target.value)}
-            //   autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="datestart"
+            name="datestart"
+            type="datetime-local"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="input input-bordered w-full"
+            // required
+          />
         </div>
 
-        <div>
-          <label
-            htmlFor="dateend"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Date End
+        {/* End Date */}
+        <div className="form-control mb-4">
+          <label htmlFor="dateend" className="label">
+            <span className="label-text">End Date & Time</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="dateend"
-              name="dateend"
-              type="datetime-local"
-              // required
-              onChange={(e) => setEndDate(e.target.value)}
-              autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="dateend"
+            name="dateend"
+            type="datetime-local"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="input input-bordered w-full"
+            autoComplete="email"
+            // required
+          />
         </div>
 
-
-
-        <div>
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Description
+        {/* Description */}
+        <div className="form-control mb-4">
+          <label htmlFor="description" className="label">
+            <span className="label-text">Description</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="description"
-              name="description"
-              type="text"
-              // required
-              onChange={(e) => setDescription(e.target.value)}
-              autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <textarea
+            id="description"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            placeholder="Enter event description"
+            // required
+          ></textarea>
         </div>
 
-
-        <div>
-          <label
-            htmlFor="ticketprice"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Ticket Price (0 for free event)
+        {/* Ticket Price */}
+        <div className="form-control mb-4">
+          <label htmlFor="ticketprice" className="label">
+            <span className="label-text">Ticket Price (0 for free event)</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="ticketprice"
-              name="ticketprice"
-              type="number"
-              // required
-              onChange={(e) => setTicketPrice(e.target.value)}
-              autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="ticketprice"
+            name="ticketprice"
+            type="number"
+            value={ticketPrice}
+            onChange={(e) => setTicketPrice(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter ticket price"
+            autoComplete="email"
+            // required
+          />
         </div>
 
-        <div>
-          <label
-            htmlFor="tags"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Tags (Seperate by comma)
+        {/* Tags */}
+        <div className="form-control mb-4">
+          <label htmlFor="tags" className="label">
+            <span className="label-text">Tags (separate by comma)</span>
           </label>
-          <div className="mt-2">
-            <input
-              id="tags"
-              name="tags"
-              type="string"
-              // required
-              onChange={(e) => setTags(e.target.value)}
-            //   autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
+          <input
+            id="tags"
+            name="tags"
+            type="text"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter tags"
+            // required
+          />
         </div>
 
-
-
-        <button type="submit" className="bg-green-400 p-4 rounded-md mt-2">
-          Submit
-        </button>
+        {/* Submit Button */}
+        <div className="form-control mt-6">
+          <button type="submit" className="btn btn-success w-full">
+            Create Event
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -12,7 +12,11 @@ import { TbCalendarClock } from "react-icons/tb";
 import { IoPricetagsOutline } from "react-icons/io5";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { TicketPurchaseForm } from "./PaymentPage";
+
+import { APIProvider } from "@vis.gl/react-google-maps";
+
 import App from "../components/PaymentComponent";
+import CustomMap from "../components/CustomMap";
 
 type Props = {};
 
@@ -185,6 +189,11 @@ function SingleEventPage({}: Props) {
           <div className="p-2 my-4">
             <h1 className="font-extrabold text-2xl">Location</h1>
 
+<div>
+  <p>map</p>
+                  <CustomMap location={event.location}/>
+
+</div>
             <div className="mt-2 flex gap-2 items-center">
               <TbLocationCheck size={20} />
 
@@ -195,6 +204,7 @@ function SingleEventPage({}: Props) {
                   onClick={() => setShowMap(!showMap)}
                 >
                   {showMap ? "Hide map" : "Show map"}
+                 
                 </p>
               </div>
 
