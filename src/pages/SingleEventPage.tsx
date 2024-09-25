@@ -189,26 +189,27 @@ function SingleEventPage({}: Props) {
           <div className="p-2 my-4">
             <h1 className="font-extrabold text-2xl">Location</h1>
 
-<div>
-  <p>map</p>
-                  <CustomMap location={event.location}/>
-
-</div>
             <div className="mt-2 flex gap-2 items-center">
-              <TbLocationCheck size={20} />
+             
 
-              <div>
+              <div className="w-full">
+                <div className="flex gap-2">
+                <TbLocationCheck size={20} />
                 <h1 className="font">{event.location}</h1>
+                </div>
                 <p
                   className="text-xs font-semibold text-blue-500 cursor-pointer"
                   onClick={() => setShowMap(!showMap)}
                 >
                   {showMap ? "Hide map" : "Show map"}
-                 
                 </p>
-              </div>
 
-              {showMap && <p>Showing map.....</p>}
+                {showMap && (
+                  <div>
+                    <CustomMap location={event.location} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

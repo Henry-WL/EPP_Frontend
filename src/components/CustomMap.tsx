@@ -3,6 +3,7 @@ import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import axios from "axios";
 
 const CustomMap = ({ location }) => {
+    console.log(location)
   const mapStyles = {
     height: "400px",
     width: "100%",
