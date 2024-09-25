@@ -7,9 +7,10 @@ const stripePromise = loadStripe('pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KO
 
 interface TicketPurchaseFormProps {
   ticketPrice: number;
+  setPaymentSuccess;
 }
 
-export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPrice = 10 }) => {
+const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPrice = 10, setPaymentSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -51,6 +52,7 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPr
       console.error('Payment failed:', error.message);
     } else if (paymentIntent?.status === 'succeeded') {
       console.log('Payment successful:', paymentIntent);
+      setPaymentSuccess(true)
       // Handle post-payment actions, such as issuing tickets or confirmation
     }
   };
@@ -103,9 +105,9 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPr
 };
 
 // Wrap the form with Stripe's Elements provider
-const App: React.FC<{ ticketPrice: number }> = ({ ticketPrice }) => (
+const App: React.FC<{ ticketPrice: number, setPaymentSuccess }> = ({ ticketPrice }) => (
   <Elements stripe={stripePromise}>
-    <TicketPurchaseForm ticketPrice={ticketPrice} />
+    <TicketPurchaseForm ticketPrice={ticketPrice} setPaymentSuccess={setPaymentSuccess} />
   </Elements>
 );
 

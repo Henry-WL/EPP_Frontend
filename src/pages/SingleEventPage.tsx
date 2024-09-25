@@ -42,10 +42,11 @@ function SingleEventPage({}: Props) {
   const [showMap, setShowMap] = useState<boolean>(false);
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
+  const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
   const { response, error, isLoading, sendRequest } = useAxios();
 
   if (!auth) {
-    return <span className="loading loading-spinner loading-lg"></span>
+    return <span className="loading loading-spinner loading-lg"></span>;
   }
 
   useEffect(() => {
@@ -75,7 +76,7 @@ function SingleEventPage({}: Props) {
   };
 
   if (isLoading || !event) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />;
   }
 
   const originalStartDateString = event.startDate;
@@ -113,14 +114,14 @@ function SingleEventPage({}: Props) {
     let currentDate = new Date();
     let eventStartDate = new Date(startDate);
 
-
-
     if (currentDate > eventStartDate) {
       return true;
     } else {
       return false;
     }
   };
+
+  const userIsAttending = event.attendees.some(attendee => attendee.userId === auth.userId);
 
   return (
     <div className="m-2">
@@ -134,22 +135,21 @@ function SingleEventPage({}: Props) {
         />
       </div>
 
+      {checkEventPastDate(event.startDate) ? (
+        <div className="w-full">
+          <div className="border-2 bg-yellow-50 border-yellow-400 rounded-md mx-10 my-4 p-2 h-14 flex gap-4 items-center">
+            <div className="pl-2">
+              <PiCalendarX size={26} />
+            </div>
 
-
-      {  checkEventPastDate(event.startDate) ? 
-      <div className="w-full">
-        <div className="border-2 bg-yellow-50 border-yellow-400 rounded-md mx-10 my-4 p-2 h-14 flex gap-4 items-center">
-          <div className="pl-2">
-            <PiCalendarX size={26} />
-          </div>
-
-          <div>
-            <h3 className="font-light">Sales Ended</h3>
+            <div>
+              <h3 className="font-light">Sales Ended</h3>
+            </div>
           </div>
         </div>
-      </div> : <div className="mx-10 my-4"></div>
-
-      }
+      ) : (
+        <div className="mx-10 my-4"></div>
+      )}
 
       <div className="w-full justify-center sm:flex">
         {/* main div */}
@@ -234,34 +234,89 @@ function SingleEventPage({}: Props) {
         <div className="min-w-96">
           {/* right div */}
 
-          {event.ticketPrice <= 0 && 
-           <div className="border-2 border-gray-500 p-1 rounded-md">
-           <button
-             onClick={joinEventHandler}
-             className="p-2 bg-green-400 rounded-md"
-             disabled={disabledButton}
-           >
-             Join Event
-           </button>
+          {event.ticketPrice <= 0 && (
+            <div className="border-2 border-gray-500 p-1 rounded-md">
+              <button
+                onClick={joinEventHandler}
+                className="p-2 bg-green-400 rounded-md"
+                disabled={disabledButton}
+              >
+                Join Event
+              </button>
 
-           <button
-             onClick={leaveEventHandler}
-             className="p-2 bg-red-400 rounded-md"
-             disabled={!disabledButton}
-           >
-             Leave Event
-           </button>
+              <button
+                onClick={leaveEventHandler}
+                className="p-2 bg-red-400 rounded-md"
+                disabled={!disabledButton}
+              >
+                Leave Event
+              </button>
 
-           <button
-             onClick={() => console.log("like")}
-             className="p-2 bg-pink-400 rounded-md"
-           >{`Like event <3`}</button>
-         </div>
-          }
+              <button
+                onClick={() => console.log("like")}
+                className="p-2 bg-pink-400 rounded-md"
+              >{`Like event <3`}</button>
+            </div>
+          )} 
 
-          {event.ticketPrice > 0 && <App/>}
+          
 
-         
+          {userIsAttending && (
+            <div className="border-2 border-gray-500 p-1 rounded-md">
+              <button
+                onClick={joinEventHandler}
+                className="p-2 bg-green-400 rounded-md"
+                disabled={disabledButton}
+              >
+                Join Event
+              </button>
+
+              <button
+                onClick={leaveEventHandler}
+                className="p-2 bg-red-400 rounded-md"
+                disabled={!disabledButton}
+              >
+                Leave Event
+              </button>
+
+              <button
+                onClick={() => console.log("like")}
+                className="p-2 bg-pink-400 rounded-md"
+              >{`Like event <3`}</button>
+            </div>
+          )}
+
+          {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
+          {event.ticketPrice > 0 && !paymentSucess && !userIsAttending &&  (
+            <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} />
+          )}
+
+          {paymentSucess && <p>payment complete</p>}
+
+          {paymentSucess && !userIsAttending && (
+            <div className="border-2 border-gray-500 p-1 rounded-md">
+              <button
+                onClick={joinEventHandler}
+                className="p-2 bg-green-400 rounded-md"
+                disabled={disabledButton}
+              >
+                Join Event
+              </button>
+
+              <button
+                onClick={leaveEventHandler}
+                className="p-2 bg-red-400 rounded-md"
+                disabled={!disabledButton}
+              >
+                Leave Event
+              </button>
+
+              <button
+                onClick={() => console.log("like")}
+                className="p-2 bg-pink-400 rounded-md"
+              >{`Like event <3`}</button>
+            </div>
+          )}
 
           <div className="flex">
             {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
@@ -277,7 +332,7 @@ function SingleEventPage({}: Props) {
           </div>
 
           {/* if user is in attendee list, show add to g calendar */}
-          <AddToGoogleCalendarButton event={event}/>
+          <AddToGoogleCalendarButton event={event} />
         </div>
       </div>
 
