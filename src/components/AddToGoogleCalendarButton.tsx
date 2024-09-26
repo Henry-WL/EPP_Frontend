@@ -1,4 +1,5 @@
 import React from "react";
+import { PiCalendarCheck } from "react-icons/pi";
 
 interface Event {
   _id: string;
@@ -31,13 +32,14 @@ const AddToGoogleCalendarButton: React.FC<Props> = ({ event }) => {
 
   return (
     <a
-      href={googleCalendarUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="btn btn-primary bg-red-400 p-2"
-    >
-      Add to Google Calendar
-    </a>
+    href={googleCalendarUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn bg-white border border-gray-300 shadow-md rounded-lg text-red-500 hover:bg-red-500 hover:text-white p-2 transition duration-300 ease-in-out flex items-center justify-center"
+  >
+    <PiCalendarCheck size={20} />
+    Add to Google Calendar
+  </a>
   );
 };
 
