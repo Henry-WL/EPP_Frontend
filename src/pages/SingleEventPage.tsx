@@ -17,6 +17,8 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 
 import App from "../components/PaymentComponent";
 import CustomMap from "../components/CustomMap";
+import AttendeeCard from "../components/AttendeeCard";
+import EventButtons from "../components/EventButtons";
 
 type Props = {};
 
@@ -47,11 +49,9 @@ function SingleEventPage({}: Props) {
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
-  // const [errorMessage, setErrorMessage] = useState<string>("")
   const { response, error, errorMessage, isLoading, sendRequest } = useAxios();
 
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
   if (!auth) {
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -84,22 +84,16 @@ function SingleEventPage({}: Props) {
   };
 
   const deleteEventHandler = async () => {
-
     try {
+      const response = await sendRequest(`/events/${eventId}`, "DELETE");
 
-      const response = await sendRequest(`/events/${eventId}`, "DELETE")
-  
-      console.log(response)
-      navigate('/events')
+      console.log(response);
+      navigate("/events");
     } catch (err) {
-      console.log(err)
-      console.log(err.response.data.message, 'response')
-
-
-
+      console.log(err);
+      console.log(err.response.data.message, "response");
     }
-
-  }
+  };
 
   if (isLoading || !event) {
     return <LoadingSpinner />;
@@ -118,8 +112,6 @@ function SingleEventPage({}: Props) {
     locale: enGB,
   });
 
-  // console.log(event.startDate, 'start date')
-
   const timeBetweenDates = intervalToDuration({
     start: new Date(parsedStartDate),
     end: new Date(parsedEndDate),
@@ -131,10 +123,7 @@ function SingleEventPage({}: Props) {
 
   if (event) {
     disabledButton = event.attendees.some((a) => a.userId === auth.userId);
-    console.log(disabledButton);
   }
-
-  console.log(disabledButton);
 
   const checkEventPastDate = (startDate: string) => {
     let currentDate = new Date();
@@ -186,7 +175,6 @@ function SingleEventPage({}: Props) {
           {/* left div */}
 
           <div className="p-2 my-4">
-            {/* <h1 className="text-2xl p-2 mx-10 my-4">{event.name}</h1> */}
             <h1 className="font-semibold">{formattedStartDate}</h1>
 
             <h1 className="text-3xl font-extrabold pt-2">{event.name}</h1>
@@ -265,15 +253,13 @@ function SingleEventPage({}: Props) {
 
           {auth.isStaff && (
             <div>
-              <button
-                className="btn btn-error"
-                onClick={deleteEventHandler}
-              >
+              <button className="btn btn-error" onClick={deleteEventHandler}>
                 Delete Event
               </button>
 
-              {error && <h1 className="text-lg font-bold pt-2">Error {errorMessage}</h1>}
-
+              {error && (
+                <h1 className="text-lg font-bold pt-2">Error {errorMessage}</h1>
+              )}
             </div>
           )}
         </div>
@@ -281,54 +267,22 @@ function SingleEventPage({}: Props) {
         <div className="min-w-96">
           {/* right div */}
 
+          <AttendeeCard attendees={event.attendees} />
+
           {event.ticketPrice <= 0 && !userIsAttending && (
-            <div className="border-2 border-gray-500 p-1 rounded-md">
-              <button
-                onClick={joinEventHandler}
-                className="p-2 bg-green-400 rounded-md"
-                disabled={disabledButton}
-              >
-                Join Event
-              </button>
-
-              <button
-                onClick={leaveEventHandler}
-                className="p-2 bg-red-400 rounded-md"
-                disabled={!disabledButton}
-              >
-                Leave Event
-              </button>
-
-              <button
-                onClick={() => console.log("like")}
-                className="p-2 bg-pink-400 rounded-md"
-              >{`Like event <3`}</button>
-            </div>
+            <EventButtons
+              joinEventHandler={joinEventHandler}
+              leaveEventHandler={leaveEventHandler}
+              disabledButton={disabledButton}
+            />
           )}
 
           {userIsAttending && (
-            <div className="border-2 border-gray-500 p-1 rounded-md">
-              <button
-                onClick={joinEventHandler}
-                className="p-2 bg-green-400 rounded-md"
-                disabled={disabledButton}
-              >
-                Join Event
-              </button>
-
-              <button
-                onClick={leaveEventHandler}
-                className="p-2 bg-red-400 rounded-md"
-                disabled={!disabledButton}
-              >
-                Leave Event
-              </button>
-
-              <button
-                onClick={() => console.log("like")}
-                className="p-2 bg-pink-400 rounded-md"
-              >{`Like event <3`}</button>
-            </div>
+            <EventButtons
+              joinEventHandler={joinEventHandler}
+              leaveEventHandler={leaveEventHandler}
+              disabledButton={disabledButton}
+            />
           )}
 
           {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
@@ -336,61 +290,18 @@ function SingleEventPage({}: Props) {
             <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} />
           )}
 
-          {paymentSucess && <p>payment complete</p>}
-
           {paymentSucess && !userIsAttending && (
-            <div className="border-2 border-gray-500 p-1 rounded-md">
-              <button
-                onClick={joinEventHandler}
-                className="p-2 bg-green-400 rounded-md"
-                disabled={disabledButton}
-              >
-                Join Event
-              </button>
-
-              <button
-                onClick={leaveEventHandler}
-                className="p-2 bg-red-400 rounded-md"
-                disabled={!disabledButton}
-              >
-                Leave Event
-              </button>
-
-              <button
-                onClick={() => console.log("like")}
-                className="p-2 bg-pink-400 rounded-md"
-              >{`Like event <3`}</button>
-            </div>
+            <EventButtons
+              joinEventHandler={joinEventHandler}
+              leaveEventHandler={leaveEventHandler}
+              disabledButton={disabledButton}
+            />
           )}
-
-          <div className="flex">
-            {/* <div className="h-96 w-96 bg-red-500">MAP</div> */}
-
-            <div>
-              <h1 className="underline text-xl">Attendees</h1>
-              {!isLoading &&
-                event &&
-                event.attendees.map((attendee) => {
-                  return <p>{attendee.username}</p>;
-                })}
-            </div>
-          </div>
 
           {/* if user is in attendee list, show add to g calendar */}
           {userIsAttending && <AddToGoogleCalendarButton event={event} />}
-          {/* <AddToGoogleCalendarButton event={event} /> */}
         </div>
       </div>
-
-      {/* <div>
-        {!isLoading && event && (
-          <div>
-            <h1 className="text-xl">{formattedStartDate}</h1>
-            <h1 className="text-xl">{formattedEndDate}</h1>
-            <h1 className="text-xl">{event.description}</h1>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 }
