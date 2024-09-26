@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 export const useAxios = () => {
   const [response, setResponse] = useState();
   const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const sendRequest = async (url:string, method = "GET", data?: object, headers = {}) => {
@@ -23,6 +24,7 @@ export const useAxios = () => {
         const axiosError = err as AxiosError
         if (axiosError) {
             setError(axiosError.message)
+            setErrorMessage(axiosError.response?.data.message)
             setIsLoading(false)
             throw axiosError;
         } else {
@@ -31,5 +33,5 @@ export const useAxios = () => {
     }
   };
 
-  return { response, error, isLoading, sendRequest };
+  return { response, error, errorMessage, isLoading, sendRequest };
 };

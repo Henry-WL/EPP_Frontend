@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import authContext, { AuthContextType } from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
 import AddToGoogleCalendarButton from "../components/AddToGoogleCalendarButton";
@@ -47,7 +47,11 @@ function SingleEventPage({}: Props) {
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
-  const { response, error, isLoading, sendRequest } = useAxios();
+  // const [errorMessage, setErrorMessage] = useState<string>("")
+  const { response, error, errorMessage, isLoading, sendRequest } = useAxios();
+
+  const navigate = useNavigate()
+  
 
   if (!auth) {
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -78,6 +82,24 @@ function SingleEventPage({}: Props) {
 
     setEvent(response.data.foundEvent);
   };
+
+  const deleteEventHandler = async () => {
+
+    try {
+
+      const response = await sendRequest(`/events/${eventId}`, "DELETE")
+  
+      console.log(response)
+      navigate('/events')
+    } catch (err) {
+      console.log(err)
+      console.log(err.response.data.message, 'response')
+
+
+
+    }
+
+  }
 
   if (isLoading || !event) {
     return <LoadingSpinner />;
@@ -190,12 +212,10 @@ function SingleEventPage({}: Props) {
             <h1 className="font-extrabold text-2xl">Location</h1>
 
             <div className="mt-2 flex gap-2 items-center">
-             
-
               <div className="w-full">
                 <div className="flex gap-2">
-                <TbLocationCheck size={20} />
-                <h1 className="font">{event.location}</h1>
+                  <TbLocationCheck size={20} />
+                  <h1 className="font">{event.location}</h1>
                 </div>
                 <p
                   className="text-xs font-semibold text-blue-500 cursor-pointer"
@@ -242,6 +262,20 @@ function SingleEventPage({}: Props) {
               })}
             </div>
           </div>
+
+          {auth.isStaff && (
+            <div>
+              <button
+                className="btn btn-error"
+                onClick={deleteEventHandler}
+              >
+                Delete Event
+              </button>
+
+              {error && <h1 className="text-lg font-bold pt-2">Error {errorMessage}</h1>}
+
+            </div>
+          )}
         </div>
 
         <div className="min-w-96">
