@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import authContext from '../context/auth-context';
 
 // Load Stripe with your publishable key
 const stripePromise = loadStripe('pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KOl4a0c1eITUUf897ckHH3KnB6WM8NwYR9mDzS3u80xcwX3rKVx8f00pz2gWygO');
 
 interface TicketPurchaseFormProps {
   ticketPrice: number;
-  setPaymentSuccess;
+  receipt_email: string;
+//   setPaymentSuccess;
 }
-
-const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPrice = 10, setPaymentSuccess }) => {
+// WRONG FORM NOT USING
+export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPrice = 10, setPaymentSuccess, receipt_email='henry@gmail.com' }) => {
+    console.log('Initial ticketPrice:', ticketPrice); // Log when the component renders
+    console.log('Initial receipt_email:', receipt_email); // Log when the component renders
+  
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+  const auth = useContext(authContext)
+
+  console.log(auth, 'auth in payment comp')
+
   // Fetch the payment intent from the backend
   const fetchPaymentIntent = async () => {
+    console.log('first')
+    console.log('Sending request with:', { ticketPrice, receipt_email });
+
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/payment/create-payment-intent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ticketPrice }), // Send ticket price to backend
+      body: JSON.stringify({ ticketPrice, receipt_email}), // Send ticket price to backend
     });
 
     const data = await response.json();
@@ -105,10 +117,10 @@ const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({ ticketPrice = 1
 };
 
 // Wrap the form with Stripe's Elements provider
-const App: React.FC<{ ticketPrice: number, setPaymentSuccess }> = ({ ticketPrice }) => (
-  <Elements stripe={stripePromise}>
-    <TicketPurchaseForm ticketPrice={ticketPrice} setPaymentSuccess={setPaymentSuccess} />
-  </Elements>
-);
+// const App: React.FC<{ ticketPrice: number, setPaymentSuccess }> = ({ ticketPrice }) => (
+//   <Elements stripe={stripePromise}>
+//     <TicketPurchaseForm ticketPrice={ticketPrice} setPaymentSuccess={setPaymentSuccess} />
+//   </Elements>
+// );
 
-export default App;
+// export default App;

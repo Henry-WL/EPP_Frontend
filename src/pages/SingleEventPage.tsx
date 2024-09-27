@@ -287,7 +287,7 @@ function SingleEventPage({}: Props) {
 
           {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
           {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
-            <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} />
+            <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} ticketPrice={event.ticketPrice} receipt_email={auth.email} />
           )}
 
           {paymentSucess && !userIsAttending && (
