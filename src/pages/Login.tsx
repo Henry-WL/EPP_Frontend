@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
 
 const Login = (props: Props) => {
+  const [isSignup, setIsSignup] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   // const [error, setError] = useState("");
@@ -14,38 +16,51 @@ const Login = (props: Props) => {
   // const navigate = useNavigate()
   console.log(auth);
 
-  const { sendRequest, response, isLoading, error } = useAxios();
-
+  const { sendRequest, response, isLoading, error, errorMessage } = useAxios();
 
   // remove logs
   const loginSignupHandler = async (event) => {
     event.preventDefault();
 
-    try {
-      // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`,
-      //   {
-      //     "email": email,
-      //     "password": password
-      //   }
-      // )
+    if (isSignup) {
+      try {
+        const response = await sendRequest("/user/signup", "POST", {
+          email: email,
+          username: username,
+          password: password,
+        });
 
-      const response = await sendRequest("/user/login", "POST", {
-        email: email,
-        password: password,
-      });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`,
+        //   {
+        //     "email": email,
+        //     "password": password
+        //   }
+        // )
 
-      console.log(response);
+        const response = await sendRequest("/user/login", "POST", {
+          email: email,
+          password: password,
+        });
 
-      auth.login(
-        response.data.token,
-        response.data.userId,
-        response.data.email,
-        response.data.isStaff
-      );
-      // navigate('/')
-    } catch (err) {
-      console.log(err);
-      setError(err.response.data.message);
+        console.log(response);
+
+        auth.login(
+          response.data.token,
+          response.data.userId,
+          response.data.email,
+          response.data.isStaff
+        );
+        // navigate('/')
+      } catch (err) {
+        console.log(err);
+        setError(err.response.data.message);
+      }
     }
   };
 
@@ -108,6 +123,31 @@ const Login = (props: Props) => {
                 </div>
               </div>
 
+              {isSignup && (
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label
+                      for="username"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Username
+                    </label>
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      id="username"
+                      name="username"
+                      type="text"
+                      // autocomplete="username"
+                      required
+                      className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      onChange={(e) => setUsername(e.target.value)}
+                      value={username}
+                    />
+                  </div>
+                </div>
+              )}
+
               <div>
                 <div className="flex items-center justify-between">
                   <label
@@ -137,6 +177,9 @@ const Login = (props: Props) => {
                   />
 
                   {error && <p className="text-red-500">{error}</p>}
+
+                  {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
                 </div>
               </div>
 
@@ -145,7 +188,7 @@ const Login = (props: Props) => {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  {isSignup ? "Signup" : "Login"}
                 </button>
 
                 <button
@@ -158,15 +201,33 @@ const Login = (props: Props) => {
               </div>
             </form>
 
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{" "}
-              <a
-                href="#"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Start a 14 day free trial
-              </a>
-            </p>
+            {!isSignup && (
+              <p className="mt-10 text-center text-sm text-gray-500">
+                Not a member?
+                <a
+                  href="#"
+                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                  onClick={() => setIsSignup(true)}
+                >
+                  {" "}
+                  Signup now!
+                </a>
+              </p>
+            )}
+
+            {isSignup && (
+              <p className="mt-10 text-center text-sm text-gray-500">
+                Have an account?
+                <a
+                  href="#"
+                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                  onClick={() => setIsSignup(false)}
+                >
+                  {" "}
+                  Login now!
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -78,6 +78,8 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-6">Purchase Ticket</h2>
+      <p className="text-lg mb-4 text-center">Total: £{ticketPrice}</p> {/* Display the price */}
+
 
       <button
         onClick={fetchPaymentIntent}
