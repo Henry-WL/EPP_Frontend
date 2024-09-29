@@ -271,7 +271,10 @@ function SingleEventPage({}: Props) {
 
           <AttendeeCard attendees={event.attendees} />
 
-          {event.payWant && !paymentSucess && !userIsAttending && (
+          {!checkEventPastDate(event.startDate) && 
+            (
+              <div>
+{event.payWant && !paymentSucess && !userIsAttending && (
             <div>
               <div className="form-control mb-4">
           <label htmlFor="ticketprice" className="label">
@@ -333,7 +336,12 @@ function SingleEventPage({}: Props) {
 
           {/* if user is in attendee list, show add to g calendar */}
           {userIsAttending && <AddToGoogleCalendarButton event={event} />}
-        </div>
+        
+              </div>
+            )
+          }
+
+          </div>
       </div>
     </div>
   );
