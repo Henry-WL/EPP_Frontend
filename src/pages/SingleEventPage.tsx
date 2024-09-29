@@ -41,11 +41,13 @@ interface Event {
   startDate: string;
   endDate: string;
   ticketPrice: number;
+  payWant: boolean;
 }
 
 function SingleEventPage({}: Props) {
   const [event, setEvent] = useState<Event>();
   const [showMap, setShowMap] = useState<boolean>(false);
+  const [payWantVal, setPayWantVal] = useState<number>(0)
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
@@ -269,7 +271,34 @@ function SingleEventPage({}: Props) {
 
           <AttendeeCard attendees={event.attendees} />
 
-          {event.ticketPrice <= 0 && !userIsAttending && (
+          {event.payWant && !paymentSucess && !userIsAttending && (
+            <div>
+              <div className="form-control mb-4">
+          <label htmlFor="ticketprice" className="label">
+            <span className="label-text font-bold">Pay what you want below</span>
+          </label>
+          <input
+            id="ticketprice"
+            name="ticketprice"
+            type="number"
+            // disabled={payWant}
+            value={payWantVal}
+            onChange={(e) => setPayWantVal(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter ticket price"
+            autoComplete="email"
+            // required
+          />
+        </div>
+              <TicketPurchaseForm
+                setPaymentSuccess={setPaymentSuccess}
+                ticketPrice={payWantVal}
+                receipt_email={auth.email}
+              />
+            </div>
+          )}
+
+          {event.ticketPrice <= 0 && !userIsAttending && event.payWant == false && (
             <EventButtons
               joinEventHandler={joinEventHandler}
               leaveEventHandler={leaveEventHandler}
@@ -287,7 +316,11 @@ function SingleEventPage({}: Props) {
 
           {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
           {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
-            <TicketPurchaseForm setPaymentSuccess={setPaymentSuccess} ticketPrice={event.ticketPrice} receipt_email={auth.email} />
+            <TicketPurchaseForm
+              setPaymentSuccess={setPaymentSuccess}
+              ticketPrice={event.ticketPrice}
+              receipt_email={auth.email}
+            />
           )}
 
           {paymentSucess && !userIsAttending && (

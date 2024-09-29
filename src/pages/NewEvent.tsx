@@ -10,6 +10,7 @@ function NewEvent({}: Props) {
   const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [payWant, setPayWant] = useState<boolean>(false)
   const [ticketPrice, setTicketPrice] = useState<string>("0");
   const [tags, setTags] = useState<string>("");
   // const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
@@ -32,6 +33,9 @@ function NewEvent({}: Props) {
     const tagsArr = tags.split(",").map((tag) => tag.trim());
     console.log(tagsArr);
 
+
+    console.log(payWant, 'pay wantttttt')
+
     // Send event data to the server
     const response = await sendRequest("/events", "POST", {
       name: name,
@@ -39,6 +43,7 @@ function NewEvent({}: Props) {
       description: description,
       startDate: startDate,
       endDate: endDate,
+      payWant: payWant,
       ticketPrice: ticketPrice,
       tagsArr: tagsArr,
     });
@@ -137,6 +142,14 @@ function NewEvent({}: Props) {
           ></textarea>
         </div>
 
+        {/* Pay what you want? */}
+        <div className="form-control">
+          <label className="label cursor-pointer">
+            <span className="label-text">Pay what you want</span>
+            <input type="checkbox" defaultChecked={payWant} className="checkbox" onChange={() => setPayWant(!payWant)} />
+          </label>
+        </div>
+
         {/* Ticket Price */}
         <div className="form-control mb-4">
           <label htmlFor="ticketprice" className="label">
@@ -146,6 +159,7 @@ function NewEvent({}: Props) {
             id="ticketprice"
             name="ticketprice"
             type="number"
+            disabled={payWant}
             value={ticketPrice}
             onChange={(e) => setTicketPrice(e.target.value)}
             className="input input-bordered w-full"
