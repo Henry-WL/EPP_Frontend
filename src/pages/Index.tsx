@@ -3,6 +3,7 @@ import authContext from "../context/auth-context";
 import CardComponent from "../components/cardComponent";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 type Props = {};
 
@@ -44,6 +45,11 @@ function Index({}: Props) {
 
     fetchEvents();
   }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
 
   return (
     <div>

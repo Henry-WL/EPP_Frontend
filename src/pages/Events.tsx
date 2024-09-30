@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAxios } from "../components/hooks/useAxios";
 import CardComponent from "../components/cardComponent";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 interface Attendee {
     userId: string;
@@ -46,7 +47,7 @@ function Events({}: Props) {
 
       {isLoading && (
         <div>
-          <h1 className="text-3xl">Loading....</h1>
+            <LoadingSpinner />
         </div>
       )}
 

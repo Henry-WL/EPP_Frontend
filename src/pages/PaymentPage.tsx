@@ -120,6 +120,9 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
           </button>
         </form>
       )}
+
+
+
     </div>
   );
 };

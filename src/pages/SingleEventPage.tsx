@@ -47,7 +47,7 @@ interface Event {
 function SingleEventPage({}: Props) {
   const [event, setEvent] = useState<Event>();
   const [showMap, setShowMap] = useState<boolean>(false);
-  const [payWantVal, setPayWantVal] = useState<number>(0)
+  const [payWantVal, setPayWantVal] = useState<number>(0);
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
@@ -255,9 +255,35 @@ function SingleEventPage({}: Props) {
 
           {auth.isStaff && (
             <div>
-              <button className="btn btn-error" onClick={deleteEventHandler}>
+              {/* Open the modal using document.getElementById('ID').showModal() method */}
+              <button
+                className="btn btn-error"
+                onClick={() =>
+                  document.getElementById("my_modal_2").showModal()
+                }
+              >
                 Delete Event
               </button>
+              <dialog id="my_modal_2" className="modal">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">
+                    Confirm below to delete event
+                  </h3>
+                  <button
+                    className="btn btn-error mt-4"
+                    onClick={deleteEventHandler}
+                  >
+                    Delete Event
+                  </button>
+
+                  <p className="py-4 text-sm">
+                    Press ESC key or click outside to close
+                  </p>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
 
               {error && (
                 <h1 className="text-lg font-bold pt-2">Error {errorMessage}</h1>
@@ -271,77 +297,77 @@ function SingleEventPage({}: Props) {
 
           <AttendeeCard attendees={event.attendees} />
 
-          {!checkEventPastDate(event.startDate) && 
-            (
-              <div>
-{event.payWant && !paymentSucess && !userIsAttending && (
+          {!checkEventPastDate(event.startDate) && (
             <div>
-              <div className="form-control mb-4">
-          <label htmlFor="ticketprice" className="label">
-            <span className="label-text font-bold">Pay what you want below</span>
-          </label>
-          <input
-            id="ticketprice"
-            name="ticketprice"
-            type="number"
-            // disabled={payWant}
-            value={payWantVal}
-            onChange={(e) => setPayWantVal(e.target.value)}
-            className="input input-bordered w-full"
-            placeholder="Enter ticket price"
-            autoComplete="email"
-            // required
-          />
-        </div>
-              <TicketPurchaseForm
-                setPaymentSuccess={setPaymentSuccess}
-                ticketPrice={payWantVal}
-                receipt_email={auth.email}
-              />
+              {event.payWant && !paymentSucess && !userIsAttending && (
+                <div>
+                  <div className="form-control mb-4">
+                    <label htmlFor="ticketprice" className="label">
+                      <span className="label-text font-bold">
+                        Pay what you want below
+                      </span>
+                    </label>
+                    <input
+                      id="ticketprice"
+                      name="ticketprice"
+                      type="number"
+                      // disabled={payWant}
+                      value={payWantVal}
+                      onChange={(e) => setPayWantVal(e.target.value)}
+                      className="input input-bordered w-full"
+                      placeholder="Enter ticket price"
+                      autoComplete="email"
+                      // required
+                    />
+                  </div>
+                  <TicketPurchaseForm
+                    setPaymentSuccess={setPaymentSuccess}
+                    ticketPrice={payWantVal}
+                    receipt_email={auth.email}
+                  />
+                </div>
+              )}
+
+              {event.ticketPrice <= 0 &&
+                !userIsAttending &&
+                event.payWant == false && (
+                  <EventButtons
+                    joinEventHandler={joinEventHandler}
+                    leaveEventHandler={leaveEventHandler}
+                    disabledButton={disabledButton}
+                  />
+                )}
+
+              {userIsAttending && (
+                <EventButtons
+                  joinEventHandler={joinEventHandler}
+                  leaveEventHandler={leaveEventHandler}
+                  disabledButton={disabledButton}
+                />
+              )}
+
+              {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
+              {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
+                <TicketPurchaseForm
+                  setPaymentSuccess={setPaymentSuccess}
+                  ticketPrice={event.ticketPrice}
+                  receipt_email={auth.email}
+                />
+              )}
+
+              {paymentSucess && !userIsAttending && (
+                <EventButtons
+                  joinEventHandler={joinEventHandler}
+                  leaveEventHandler={leaveEventHandler}
+                  disabledButton={disabledButton}
+                />
+              )}
+
+              {/* if user is in attendee list, show add to g calendar */}
+              {userIsAttending && <AddToGoogleCalendarButton event={event} />}
             </div>
           )}
-
-          {event.ticketPrice <= 0 && !userIsAttending && event.payWant == false && (
-            <EventButtons
-              joinEventHandler={joinEventHandler}
-              leaveEventHandler={leaveEventHandler}
-              disabledButton={disabledButton}
-            />
-          )}
-
-          {userIsAttending && (
-            <EventButtons
-              joinEventHandler={joinEventHandler}
-              leaveEventHandler={leaveEventHandler}
-              disabledButton={disabledButton}
-            />
-          )}
-
-          {/* {event.ticketPrice > 0 && <App setPaymentSuccess={setPaymentSuccess}/>} */}
-          {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
-            <TicketPurchaseForm
-              setPaymentSuccess={setPaymentSuccess}
-              ticketPrice={event.ticketPrice}
-              receipt_email={auth.email}
-            />
-          )}
-
-          {paymentSucess && !userIsAttending && (
-            <EventButtons
-              joinEventHandler={joinEventHandler}
-              leaveEventHandler={leaveEventHandler}
-              disabledButton={disabledButton}
-            />
-          )}
-
-          {/* if user is in attendee list, show add to g calendar */}
-          {userIsAttending && <AddToGoogleCalendarButton event={event} />}
-        
-              </div>
-            )
-          }
-
-          </div>
+        </div>
       </div>
     </div>
   );

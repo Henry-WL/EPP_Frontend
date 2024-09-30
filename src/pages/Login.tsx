@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import authContext from "../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Login = (props: Props) => {
   const [isSignup, setIsSignup] = useState<boolean>(false);
@@ -70,6 +71,10 @@ const Login = (props: Props) => {
 
     loginSignupHandler();
   };
+
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
 
   return (
     <div className="flex min-h-screen">
