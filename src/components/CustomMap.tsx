@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import axios from "axios";
 
-const CustomMap = ({ location }) => {
+interface CustomMapProps {
+  location: string;
+}
+
+const CustomMap:React.FC<CustomMapProps> = ({ location }) => {
   const mapStyles = {
     height: "400px",
     width: "100%",
     borderRadius: "20px",
   };
 
-  const [coordinates, setCoordinates] = useState(null);
+  const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [scriptLoaded, setScriptLoaded] = useState(false); // Track script loading
 
   useEffect(() => {
@@ -42,6 +46,11 @@ const CustomMap = ({ location }) => {
   if (!scriptLoaded || !coordinates) {
     return <div>Loading...</div>;
   }
+  
+  const mapOptions = {
+    disableDefaultUI: true,
+    gestureHandling:"greedy"
+  }
 
   return (
     <div className="map-container">
@@ -49,8 +58,7 @@ const CustomMap = ({ location }) => {
         mapContainerStyle={mapStyles}
         zoom={13}
         center={coordinates}
-        gestureHandling="greedy"
-        disableDefaultUI
+        options={mapOptions}
       >
         <Marker position={coordinates} />
       </GoogleMap>

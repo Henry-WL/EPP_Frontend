@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
 import {
   Elements,
   CardElement,
@@ -11,12 +11,12 @@ import {
 const stripePromise = loadStripe(
   "pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KOl4a0c1eITUUf897ckHH3KnB6WM8NwYR9mDzS3u80xcwX3rKVx8f00pz2gWygO"
 , {locale: 'en-GB'});
-const elementsOptions = {
+const elementsOptions: StripeElementsOptions = {
     locale: 'en-GB', 
   };
 
 interface TicketPurchaseFormProps {
-  ticketPrice: number;
+  ticketPrice: string;
   receipt_email: string;
   setPaymentSuccess: (success:boolean) => void
 }
@@ -131,10 +131,12 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
 };
 
 // Wrap the form with Stripe's Elements provider
-const paymentApp: React.FC<{ ticketPrice: number }> = ({ ticketPrice }) => (
-  <Elements stripe={stripePromise} options={elementsOptions}>
-    <TicketPurchaseForm ticketPrice={ticketPrice} />
-  </Elements>
-);
+// const paymentApp: React.FC<{ ticketPrice: number }> = ({ ticketPrice }) => (
+//   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
 
-export default paymentApp;
+//   <Elements stripe={stripePromise} options={elementsOptions}>
+//     <TicketPurchaseForm ticketPrice={ticketPrice} setPaymentSuccess={setPaymentSuccess} receipt_email={a} />
+//   </Elements>
+// );
+
+// export default paymentApp;

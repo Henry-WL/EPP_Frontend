@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import authContext, { AuthContextType } from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
 import AddToGoogleCalendarButton from "../components/AddToGoogleCalendarButton";
-import { format, intervalToDuration, parseISO } from "date-fns";
+import { Duration, format, intervalToDuration, parseISO } from "date-fns";
 import { enGB } from "date-fns/locale";
 import { PiCalendarX } from "react-icons/pi";
 import { PiCalendarCheck } from "react-icons/pi";
@@ -16,16 +16,13 @@ import { TicketPurchaseForm } from "./PaymentPage";
 import CustomMap from "../components/CustomMap";
 import AttendeeCard from "../components/AttendeeCard";
 import EventButtons from "../components/EventButtons";
+import { AxiosError } from "axios";
 
 type Props = {};
 
 interface Attendee {
   userId: string;
   username: string;
-}
-
-interface Tag {
-  tagName: string;
 }
 
 interface filmObject {
@@ -36,7 +33,7 @@ interface Event {
   _id: string;
   name: string;
   attendees: Attendee[];
-  tags: Tag[];
+  tags: string[];
   location: string;
   description: string;
   startDate: string;
@@ -49,7 +46,7 @@ interface Event {
 function SingleEventPage({}: Props) {
   const [event, setEvent] = useState<Event>();
   const [showMap, setShowMap] = useState<boolean>(false);
-  const [payWantVal, setPayWantVal] = useState<number>(0);
+  const [payWantVal, setPayWantVal] = useState<string>("");
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
@@ -94,8 +91,15 @@ function SingleEventPage({}: Props) {
       console.log(response);
       navigate("/events");
     } catch (err) {
-      console.log(err);
-      console.log(err.response.data.message, "response");
+      const axiosError = err as AxiosError;
+
+      if (axiosError.response) {
+        // Assert the type of response.data to be an object with a 'message' field
+        const errorMessage = (axiosError.response.data as { message: string }).message;
+        console.log(errorMessage, "response");
+      } else {
+        console.log("An unexpected error occurred", axiosError.message);
+      }
     }
   };
 
@@ -121,7 +125,7 @@ function SingleEventPage({}: Props) {
     end: new Date(parsedEndDate),
   });
 
-  const formatDuration = (duration) => {
+  const formatDuration = (duration:Duration) => {
     const { years, months, days, hours, minutes, seconds } = duration;
     const parts = [];
   
@@ -259,6 +263,7 @@ function SingleEventPage({}: Props) {
               <IoPricetagsOutline size={20} />
 
               {event.tags.map((tag) => {
+                console.log(typeof(tag), 'taggggg')
                 return (
                   <div className="bg-gray-100 rounded-xl p-2">
                     <p>{tag}</p>
@@ -273,9 +278,12 @@ function SingleEventPage({}: Props) {
               {/* Open the modal using document.getElementById('ID').showModal() method */}
               <button
                 className="btn btn-error"
-                onClick={() =>
-                  document.getElementById("my_modal_2").showModal()
-                }
+                onClick={() => {
+                  const modal = document.getElementById("my_modal_2");
+                  if (modal) {
+                    (modal as HTMLDialogElement).showModal(); // Type assertion to treat it as a dialog element
+                  }
+                }}
               >
                 Delete Event
               </button>
@@ -338,7 +346,7 @@ function SingleEventPage({}: Props) {
                   <TicketPurchaseForm
                     setPaymentSuccess={setPaymentSuccess}
                     ticketPrice={payWantVal}
-                    receipt_email={auth.email}
+                    receipt_email={auth.email || ""}
                   />
                 </div>
               )}
@@ -349,7 +357,7 @@ function SingleEventPage({}: Props) {
                   <EventButtons
                     joinEventHandler={joinEventHandler}
                     leaveEventHandler={leaveEventHandler}
-                    disabledButton={disabledButton}
+                    disabledButton={disabledButton ?? false}
                   />
                 )}
 
@@ -357,7 +365,7 @@ function SingleEventPage({}: Props) {
                 <EventButtons
                   joinEventHandler={joinEventHandler}
                   leaveEventHandler={leaveEventHandler}
-                  disabledButton={disabledButton}
+                  disabledButton={disabledButton ?? false}
                 />
               )}
 
@@ -365,8 +373,8 @@ function SingleEventPage({}: Props) {
               {event.ticketPrice > 0 && !paymentSucess && !userIsAttending && (
                 <TicketPurchaseForm
                   setPaymentSuccess={setPaymentSuccess}
-                  ticketPrice={event.ticketPrice}
-                  receipt_email={auth.email}
+                  ticketPrice={event.ticketPrice.toString()}
+                  receipt_email={auth.email || ""}
                 />
               )}
 
@@ -374,7 +382,7 @@ function SingleEventPage({}: Props) {
                 <EventButtons
                   joinEventHandler={joinEventHandler}
                   leaveEventHandler={leaveEventHandler}
-                  disabledButton={disabledButton}
+                  disabledButton={disabledButton ?? false}
                 />
               )}
 

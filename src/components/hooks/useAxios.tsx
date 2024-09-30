@@ -28,7 +28,7 @@ export const useAxios = () => {
         const axiosError = err as AxiosError<ErrorResponse>
         if (axiosError) {
             setError(axiosError.message)
-            setErrorMessage(axiosError.response?.data.message)
+            setErrorMessage(axiosError.response?.data.message || "An unknown error occurred");
             setIsLoading(false)
             throw axiosError;
         } else {

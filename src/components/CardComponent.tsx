@@ -2,6 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { CalendarDays, MapPin, Search, Ticket, User, Bell, LogOut } from "lucide-react"
 import { format, parseISO } from "date-fns";
 
+type filmData = {
+  Poster?:string
+}
+
 type Props = {
   eventName: string;
   eventLocation: string;
@@ -9,7 +13,7 @@ type Props = {
   startDate: string;
   tags: string[]
   id: string;
-  filmData: object
+  filmData: filmData
 };
 
 const CardComponent = ({

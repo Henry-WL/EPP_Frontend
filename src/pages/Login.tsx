@@ -39,16 +39,19 @@ const Login = (props: Props) => {
 
         console.log(response);
 
-        auth.login(
-          response.data.token,
-          response.data.userId,
-          response.data.email,
-          response.data.isStaff
-        );
+        if (auth) {
+
+          auth.login(
+            response.data.token,
+            response.data.userId,
+            response.data.email,
+            response.data.isStaff
+          );
+        }
+        
         // navigate('/')
       } catch (err) {
         console.log(err);
-        setError(err.response.data.message);
       }
     }
   };
