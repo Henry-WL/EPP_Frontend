@@ -23,9 +23,6 @@ export default function Example() {
     <div className="flex-1">
         <Link className="btn btn-ghost text-xl" to={'/events'}>All Events</Link>
 
-        <Link className="btn btn-ghost text-xl" to={'/payment'}>Payments</Link>
-
-
         {auth.isStaff && 
         
         <Link className="btn btn-ghost text-xl" to={'/newevent'}>New Event</Link>
