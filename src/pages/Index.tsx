@@ -8,26 +8,27 @@ import LoadingSpinner from "../components/LoadingSpinner";
 type Props = {};
 
 interface Attendee {
-    userId: string;
-    username: string;
+  userId: string;
+  username: string;
 }
 
 interface Event {
-    _id: string;
-    name: string;
-    attendees: Attendee[],
-    location: string;
-    description: string;
-    startDate: string;
-    tags: string[];
-    endDate: string;
-  }
+  _id: string;
+  name: string;
+  attendees: Attendee[];
+  location: string;
+  description: string;
+  startDate: string;
+  tags: string[];
+  endDate: string;
+}
 
 function Index({}: Props) {
   const auth = useContext(authContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [events, setEvents] = useState<Event[]>([]);
+  const [sortOption, setSortOption] = useState<string>("newest");
 
   const { sendRequest, response, isLoading, error } = useAxios();
   ("");
@@ -35,7 +36,7 @@ function Index({}: Props) {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const responseData = await sendRequest("/events");
+        const responseData = await sendRequest(`/events?sort=${sortOption}`);
         console.log(responseData);
         setEvents(responseData.data.allEvents);
       } catch (err) {
@@ -44,28 +45,31 @@ function Index({}: Props) {
     };
 
     fetchEvents();
-  }, []);
+  }, [sortOption]);
 
   if (isLoading) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />;
   }
-
 
   return (
     <div>
       <div className="flex justify-around">
         <div className="flex gap-4">
-            
-          <button className="btn md:btn-md lg:btn-lg" onClick={() => navigate('/myevents')}>
+          <button
+            className="btn md:btn-md lg:btn-lg"
+            onClick={() => navigate("/myevents")}
+          >
             My events
           </button>
-          <button className="btn md:btn-md lg:btn-lg">
-            Free events
-          </button>
+          <button className="btn md:btn-md lg:btn-lg">Free events</button>
         </div>
 
         <div>
-          <select className="select select-bordered w-full max-w-xs">
+          <select
+            className="select select-bordered w-full max-w-xs"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
             <option disabled selected>
               Filter
             </option>
@@ -78,19 +82,19 @@ function Index({}: Props) {
       <div className="mt-2 flex flex-wrap gap-2 justify-center">
         <div></div>
 
-        {events.slice(0,3).map((event) => {
-            return (
-                <CardComponent
-                  key={event._id}
-                  eventName={event.name}
-                  eventLocation={event.location}
-                  eventDescription={event.description}
-                  startDate={event.startDate}
-                  tags={event.tags}
-                  filmData={event.filmData}
-                  id={event._id}
-                />
-              );
+        {events.slice(0, 3).map((event) => {
+          return (
+            <CardComponent
+              key={event._id}
+              eventName={event.name}
+              eventLocation={event.location}
+              eventDescription={event.description}
+              startDate={event.startDate}
+              tags={event.tags}
+              filmData={event.filmData}
+              id={event._id}
+            />
+          );
         })}
       </div>
     </div>
