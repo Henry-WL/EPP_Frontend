@@ -119,6 +119,20 @@ function SingleEventPage({}: Props) {
     end: new Date(parsedEndDate),
   });
 
+  const formatDuration = (duration) => {
+    const { years, months, days, hours, minutes, seconds } = duration;
+    const parts = [];
+  
+    if (years) parts.push(`${years} year${years > 1 ? 's' : ''}`);
+    if (months) parts.push(`${months} month${months > 1 ? 's' : ''}`);
+    if (days) parts.push(`${days} day${days > 1 ? 's' : ''}`);
+    if (hours) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+    if (minutes) parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+    if (seconds) parts.push(`${seconds} second${seconds > 1 ? 's' : ''}`);
+
+    return parts.length ? parts.join(', ') : 'No duration';
+  };
+
   console.log(timeBetweenDates, "time between dates");
 
   let disabledButton;
@@ -231,9 +245,7 @@ function SingleEventPage({}: Props) {
               <TbCalendarClock size={20} color="green" />
 
               <h1 className="font">
-                {`Duration ${Object.values(timeBetweenDates)} ${Object.keys(
-                  timeBetweenDates
-                )}`}
+              {`Duration: ${formatDuration(timeBetweenDates)}`}
               </h1>
             </div>
           </div>
