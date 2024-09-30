@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAxios } from "../components/hooks/useAxios";
-import CardComponent from "../components/cardComponent";
+import CardComponent from "../components/CardComponent";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 interface Attendee {
@@ -17,6 +17,7 @@ interface Event {
   startDate: string;
   tags: string[];
   endDate: string;
+  filmData: object;
 }
 
 type Props = {};
@@ -24,7 +25,7 @@ type Props = {};
 function Events({}: Props) {
   const [events, setEvents] = useState<Event[]>([]);
 
-  const { sendRequest, response, isLoading, error } = useAxios();
+  const { sendRequest, isLoading } = useAxios();
   ("");
 
   useEffect(() => {

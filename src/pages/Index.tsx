@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import authContext from "../context/auth-context";
-import CardComponent from "../components/cardComponent";
+import { useEffect, useState } from "react";
+import CardComponent from "../components/CardComponent";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -21,16 +20,16 @@ interface Event {
   startDate: string;
   tags: string[];
   endDate: string;
+  filmData: object
 }
 
 function Index({}: Props) {
-  const auth = useContext(authContext);
   const navigate = useNavigate();
 
   const [events, setEvents] = useState<Event[]>([]);
   const [sortOption, setSortOption] = useState<string>("newest");
 
-  const { sendRequest, response, isLoading, error } = useAxios();
+  const { sendRequest, isLoading } = useAxios();
   ("");
 
   useEffect(() => {

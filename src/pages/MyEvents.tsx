@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import authContext, { AuthContextType } from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
-import CardComponent from "../components/cardComponent";
+import CardComponent from "../components/CardComponent";
 
 type Props = {};
 
@@ -20,12 +20,13 @@ interface Event {
     startDate: string;
     tags: string[];
     endDate: string;
+    filmData: object;
   }
 
 function MyEvents({}: Props) {
   const [events, setEvents] = useState<Event[]>([]);
   const auth = useContext(authContext) as AuthContextType | null;
-  const { response, error, isLoading, sendRequest } = useAxios();
+  const { isLoading, sendRequest } = useAxios();
 
   useEffect(() => {
     const fetchUserEvents = async () => {
@@ -62,7 +63,6 @@ function MyEvents({}: Props) {
     <div className="m-2">
       <div className="flex flex-wrap gap-4 justify-center">
         {events.map((event) => {
-          const compareDate = event.startDate;
           return (
             <div
               key={event._id}

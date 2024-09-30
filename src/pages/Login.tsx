@@ -1,8 +1,6 @@
 type Props = {};
-import axios from "axios";
 import { useContext, useState } from "react";
 import authContext from "../context/auth-context";
-import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -11,16 +9,12 @@ const Login = (props: Props) => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // const [error, setError] = useState("");
 
   const auth = useContext(authContext);
-  // const navigate = useNavigate()
-  console.log(auth);
 
   const { sendRequest, response, isLoading, error, errorMessage } = useAxios();
 
-  // remove logs
-  const loginSignupHandler = async (event) => {
+  const loginSignupHandler = async (event:any) => {
     event.preventDefault();
 
     if (isSignup) {
@@ -37,12 +31,6 @@ const Login = (props: Props) => {
       }
     } else {
       try {
-        // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`,
-        //   {
-        //     "email": email,
-        //     "password": password
-        //   }
-        // )
 
         const response = await sendRequest("/user/login", "POST", {
           email: email,
@@ -83,7 +71,6 @@ const Login = (props: Props) => {
         className="w-1/2 flex flex-col justify-end"
         style={{ backgroundColor: "#18181B" }}
       >
-        {/* <h1 className="text-yellow-500">left</h1> */}
 
         <div className="">
           <h1 className="text-white text-xl p-5 m-5">
@@ -132,7 +119,7 @@ const Login = (props: Props) => {
                 <div>
                   <div className="flex items-center justify-between">
                     <label
-                      for="username"
+                      htmlFor="username"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Username
