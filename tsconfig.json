@@ -3,12 +3,5 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "skipLibCheck": true,
-    "noEmitOnError": false,
-    "strict": false,
-    "ignoreDeprecations": "5.0"   // Ignore deprecations for TypeScript 5.x versions
-  }
-
+  ]
 }
