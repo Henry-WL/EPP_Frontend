@@ -7,6 +7,10 @@ type Props = {};
 
 const ProfilePage = (props: Props) => {
   const [user, setUser] = useState<{}>({});
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const auth = useContext(authContext) as AuthContextType | null;
 
@@ -29,6 +33,16 @@ const ProfilePage = (props: Props) => {
 
   if (isLoading) {
     return <LoadingSpinner />;
+  }
+
+  const editProfileHandler = async () => {
+    if (isEditing) {
+        const response = await sendRequest(`/user/${auth?.userId}`, "PATCH", {
+            username, email, password
+        })
+
+        setUser(response.data.updatedUser)
+    }
   }
 
   return (
@@ -55,8 +69,69 @@ const ProfilePage = (props: Props) => {
               {/* Email */}
               <p className="text-sm text-gray-500">{user.email}</p>
 
+              {isEditing && (
+                <div>
+
+                  <div className="form-control mb-4">
+                    <label htmlFor="Username" className="label">
+                      <span className="label-text text-center">Username</span>
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      // value={user.username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="input input-bordered w-full"
+                      placeholder={user.username}
+                      // autoComplete="email"
+                      // required
+                    />
+                  </div>
+
+                  <div className="form-control mb-4">
+                    <label htmlFor="Email" className="label">
+                      <span className="label-text text-center">Email</span>
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      // value={user.username}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="input input-bordered w-full"
+                      placeholder={user.email}
+                      // autoComplete="email"
+                      // required
+                    />
+                  </div>
+
+                  <div className="form-control mb-4">
+                    <label htmlFor="Password" className="label">
+                      <span className="label-text text-center">Password</span>
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="password"
+                      // value={user.username}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="input input-bordered w-full"
+                      placeholder=""
+                      // autoComplete="email"
+                      // required
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="card-actions mt-4">
-                <button className="btn btn-primary">Edit Profile</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {setIsEditing(!isEditing); editProfileHandler()}}
+                >
+                  {isEditing ? "Save" : "Edit Profile"}
+                </button>
                 <button className="btn btn-error" onClick={auth?.logout}>
                   Log Out
                 </button>
