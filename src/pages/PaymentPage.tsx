@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
+// import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
 import {
-  Elements,
+  // Elements,
   CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 
 // Load Stripe with your publishable key
-const stripePromise = loadStripe(
-  "pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KOl4a0c1eITUUf897ckHH3KnB6WM8NwYR9mDzS3u80xcwX3rKVx8f00pz2gWygO"
-, {locale: 'en-GB'});
-const elementsOptions: StripeElementsOptions = {
-    locale: 'en-GB', 
-  };
+// const stripePromise = loadStripe(
+//   "pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KOl4a0c1eITUUf897ckHH3KnB6WM8NwYR9mDzS3u80xcwX3rKVx8f00pz2gWygO"
+// , {locale: 'en-GB'});
+// const elementsOptions: StripeElementsOptions = {
+//     locale: 'en-GB', 
+//   };
 
 interface TicketPurchaseFormProps {
   ticketPrice: string;

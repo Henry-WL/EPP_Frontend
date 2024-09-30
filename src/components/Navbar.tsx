@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import authContext, { AuthContextType } from "../context/auth-context";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Example() {
   const auth = useContext(authContext) as AuthContextType | null;

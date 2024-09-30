@@ -1,10 +1,9 @@
-type Props = {};
 import { useContext, useState } from "react";
 import authContext from "../context/auth-context";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-const Login = (props: Props) => {
+const Login = () => {
   const [isSignup, setIsSignup] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -12,7 +11,7 @@ const Login = (props: Props) => {
 
   const auth = useContext(authContext);
 
-  const { sendRequest, response, isLoading, error, errorMessage } = useAxios();
+  const { sendRequest, isLoading, error, errorMessage } = useAxios();
 
   const loginSignupHandler = async (event:any) => {
     event.preventDefault();
@@ -60,7 +59,7 @@ const Login = (props: Props) => {
     setEmail("henry@x.com");
     setPassword("123456789");
 
-    loginSignupHandler();
+    loginSignupHandler(event);
   };
 
   if (isLoading) {

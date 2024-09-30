@@ -78,7 +78,7 @@ function Index({}: Props) {
         </div>
       </div>
 
-      <div className="mt-2 flex flex-wrap gap-4 justify-center mt-4">
+      <div className="flex flex-wrap gap-4 justify-center mt-4">
         <div></div>
 
         {events.slice(0, 3).map((event) => {

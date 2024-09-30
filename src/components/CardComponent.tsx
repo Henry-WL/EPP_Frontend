@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, MapPin, Search, Ticket, User, Bell, LogOut } from "lucide-react"
+import { CalendarDays, MapPin } from "lucide-react"
 import { format, parseISO } from "date-fns";
 
 type filmData = {

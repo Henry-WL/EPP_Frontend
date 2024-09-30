@@ -3,14 +3,12 @@ import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import authContext, { AuthContextType } from "../context/auth-context";
 
-type Props = {};
-
 interface User {
     username: string;
     email: string;
 }
 
-const ProfilePage = (props: Props) => {
+const ProfilePage = () => {
   const [user, setUser] = useState<User | null>();
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
