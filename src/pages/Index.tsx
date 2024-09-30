@@ -55,6 +55,7 @@ function Index({}: Props) {
     <div>
       <div className="flex justify-around">
         <div className="flex gap-4">
+            
           <button className="btn md:btn-md lg:btn-lg" onClick={() => navigate('/myevents')}>
             My events
           </button>
@@ -84,6 +85,7 @@ function Index({}: Props) {
                   eventName={event.name}
                   eventLocation={event.location}
                   eventDescription={event.description}
+                  startDate={event.startDate}
                   tags={event.tags}
                   filmData={event.filmData}
                   id={event._id}

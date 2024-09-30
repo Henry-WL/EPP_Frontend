@@ -60,6 +60,7 @@ function Events({}: Props) {
                 eventName={event.name}
                 eventLocation={event.location}
                 eventDescription={event.description}
+                startDate={event.startDate}
                 tags={event.tags}
                 id={event._id}
                 filmData={event.filmData}
