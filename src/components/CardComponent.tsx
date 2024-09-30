@@ -6,6 +6,7 @@ type Props = {
   eventDescription: string;
   tags: string[]
   id: string;
+  filmData: object
 };
 
 const CardComponent = ({
@@ -14,6 +15,7 @@ const CardComponent = ({
   eventDescription,
   tags,
   id,
+  filmData
 }: Props) => {
   const navigate = useNavigate();
   console.log(tags, 'tags')
@@ -22,7 +24,7 @@ const CardComponent = ({
       <div className="card bg-base-100 w-96 shadow-xl">
         <figure>
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+            src={filmData.Poster || "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"}
             alt="Shoes"
           />
         </figure>

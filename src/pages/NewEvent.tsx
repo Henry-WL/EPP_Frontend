@@ -9,6 +9,7 @@ type Props = {};
 
 function NewEvent({}: Props) {
   const [name, setName] = useState<string>("");
+  const [filmName, setFilmName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [payWant, setPayWant] = useState<boolean>(false)
@@ -19,6 +20,7 @@ function NewEvent({}: Props) {
   // const [startTime, setStartTime] = useState<string>("T17:00:00");
   // const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
   const [endDate, setEndDate] = useState<string>("");
+  const [filmLoading, setIsFilmLoading] = useState<boolean>(false)
   const { sendRequest, isLoading } = useAxios();
 
   const navigate = useNavigate();
@@ -37,6 +39,18 @@ function NewEvent({}: Props) {
 
     console.log(payWant, 'pay wantttttt')
 
+    console.log(filmName, 'FILM NAME')
+
+    // const filmData = await axios.get(`http://www.omdbapi.com/?apikey=${import.meta.env.VITE_BASE_URL}&t=${filmName}`)
+
+    setIsFilmLoading(true)
+
+    const filmData = await axios.get(`http://www.omdbapi.com/?t=${filmName}&apikey=${import.meta.env.VITE_OMDB_API}`)
+
+    setIsFilmLoading(false)
+
+    console.log(filmData, 'filmDATA')
+
     // Send event data to the server
     const response = await sendRequest("/events", "POST", {
       name: name,
@@ -47,6 +61,7 @@ function NewEvent({}: Props) {
       payWant: payWant,
       ticketPrice: ticketPrice,
       tagsArr: tagsArr,
+      filmData: filmData.data
     });
 
     console.log(response);
@@ -57,6 +72,10 @@ function NewEvent({}: Props) {
 
   if (isLoading) {
     return <LoadingSpinner/>
+  }
+
+  if (filmLoading) {
+    return <LoadingSpinner />
   }
 
 
@@ -77,6 +96,22 @@ function NewEvent({}: Props) {
             onChange={(e) => setName(e.target.value)}
             className="input input-bordered w-full"
             placeholder="Enter event name"
+            // required
+          />
+        </div>
+
+        <div className="form-control mb-4">
+          <label htmlFor="name" className="label">
+            <span className="label-text">Film Name</span>
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={filmName}
+            onChange={(e) => setFilmName(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter film name"
             // required
           />
         </div>

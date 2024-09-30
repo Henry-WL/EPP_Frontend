@@ -85,6 +85,7 @@ function Index({}: Props) {
                   eventLocation={event.location}
                   eventDescription={event.description}
                   tags={event.tags}
+                  filmData={event.filmData}
                   id={event._id}
                 />
               );

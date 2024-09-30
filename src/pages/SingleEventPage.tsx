@@ -148,7 +148,8 @@ function SingleEventPage({}: Props) {
 
       <div className="">
         <img
-          src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F787493499%2F1149086973953%2F1%2Foriginal.20240611-155129?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=880b1ec98629e1e890e363f4e5c9a3f4"
+          // src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F787493499%2F1149086973953%2F1%2Foriginal.20240611-155129?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=880b1ec98629e1e890e363f4e5c9a3f4"
+          src={event.filmData.Poster || "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F787493499%2F1149086973953%2F1%2Foriginal.20240611-155129?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=880b1ec98629e1e890e363f4e5c9a3f4"}
           alt=""
           className="rounded-md m-auto"
         />

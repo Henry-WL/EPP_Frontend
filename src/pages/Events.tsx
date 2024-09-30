@@ -62,6 +62,7 @@ function Events({}: Props) {
                 eventDescription={event.description}
                 tags={event.tags}
                 id={event._id}
+                filmData={event.filmData}
               />
             );
           })}
