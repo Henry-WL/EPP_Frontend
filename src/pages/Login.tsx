@@ -102,7 +102,7 @@ const Login = (props: Props) => {
               className="mx-auto h-10 w-auto"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign in to your account
+              {isSignup ? 'Sign up now' : 'Sign in to your account'}
             </h2>
           </div>
 

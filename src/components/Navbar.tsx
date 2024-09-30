@@ -9,7 +9,10 @@ export default function Example() {
     return <p>Loading...</p>
   }
 
-  console.log(auth);
+  if (!auth.isLoggedIn) {
+    return null
+  }
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -20,7 +23,7 @@ export default function Example() {
     {auth.isLoggedIn && 
     <>
     
-    <div className="flex-1">
+    <div className="flex">
         <Link className="btn btn-ghost text-xl" to={'/events'}>All Events</Link>
 
         {auth.isStaff && 
@@ -29,7 +32,7 @@ export default function Example() {
         }
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
+        <div className="hidden sm:form-control">
           <input
             type="text"
             placeholder="Search"
@@ -42,11 +45,14 @@ export default function Example() {
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
-              <img
+            <div className="w-10 rounded-full bg-neutral text-neutral-content flex text-center justify-center items-center">
+              {/* <img
                 alt="Tailwind CSS Navbar component"
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              /> */}
+               <p className="text mt-3">
+                      {auth.email && auth.email.slice(0, 1).toUpperCase()}
+                    </p>
             </div>
           </div>
           <ul

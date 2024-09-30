@@ -35,12 +35,6 @@ function EventButtons({joinEventHandler, leaveEventHandler, disabledButton}: Pro
       Leave Event
     </button>
 
-    {/* <button
-      onClick={() => console.log("like")}
-      className="w-full p-2 bg-pink-500 rounded-md text-white transition duration-300 ease-in-out hover:bg-pink-600"
-    >
-      {"Like event <3"}
-    </button> */}
   </div>
   )
 }

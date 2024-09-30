@@ -1,7 +1,11 @@
 import React from 'react'
 
+type Attendee = {
+    username: String;
+}
+
 type Props = {
-    // attendee: []
+    attendees: Attendee[];
 }
 
 function AttendeeCard({attendees}: Props) {

@@ -6,6 +6,7 @@ type Props = {
   eventName: string;
   eventLocation: string;
   eventDescription: string;
+  startDate: string;
   tags: string[]
   id: string;
   filmData: object
@@ -21,8 +22,6 @@ const CardComponent = ({
   filmData
 }: Props) => {
   const navigate = useNavigate();
-  console.log(tags, 'tags')
-
 
   const originalStartDateString = startDate;
   const parsedStartDate = parseISO(originalStartDateString);

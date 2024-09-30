@@ -1,6 +1,10 @@
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 
+interface ErrorResponse {
+    message: string; 
+  }
+
 export const useAxios = () => {
   const [response, setResponse] = useState();
   const [error, setError] = useState("");
@@ -21,7 +25,7 @@ export const useAxios = () => {
       setIsLoading(false)
       return responseData;
     } catch (err) {
-        const axiosError = err as AxiosError
+        const axiosError = err as AxiosError<ErrorResponse>
         if (axiosError) {
             setError(axiosError.message)
             setErrorMessage(axiosError.response?.data.message)

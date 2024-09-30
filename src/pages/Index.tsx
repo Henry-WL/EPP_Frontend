@@ -61,7 +61,7 @@ function Index({}: Props) {
           >
             My events
           </button>
-          <button className="btn md:btn-md lg:btn-lg">Free events</button>
+          {/* <button className="btn md:btn-md lg:btn-lg">Free events</button> */}
         </div>
 
         <div>
