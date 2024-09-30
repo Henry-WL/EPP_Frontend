@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../components/hooks/useAxios";
-import DateTimePicker from "../components/DateTimePicker";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 type Props = {};
@@ -15,33 +14,19 @@ function NewEvent({}: Props) {
   const [payWant, setPayWant] = useState<boolean>(false)
   const [ticketPrice, setTicketPrice] = useState<string>("0");
   const [tags, setTags] = useState<string>("");
-  // const [startDate, setStartDate] = useState<string>("2024-09-08T12:00:00");
   const [startDate, setStartDate] = useState<string>("");
-  // const [startTime, setStartTime] = useState<string>("T17:00:00");
-  // const [endDate, setEndDate] = useState<string>("2024-09-08T17:00:00");
   const [endDate, setEndDate] = useState<string>("");
   const [filmLoading, setIsFilmLoading] = useState<boolean>(false)
   const { sendRequest, isLoading } = useAxios();
 
   const navigate = useNavigate();
 
-  const eventSubmitHandler = async (e) => {
+  const eventSubmitHandler = async (e:any) => {
     e.preventDefault();
-
-    // Log start and end dates for debugging
-    console.log(startDate, "startDate");
-    console.log(endDate, "endDate");
 
     // Split tags string into array, trimming any extra spaces
     const tagsArr = tags.split(",").map((tag) => tag.trim());
     console.log(tagsArr);
-
-
-    console.log(payWant, 'pay wantttttt')
-
-    console.log(filmName, 'FILM NAME')
-
-    // const filmData = await axios.get(`http://www.omdbapi.com/?apikey=${import.meta.env.VITE_BASE_URL}&t=${filmName}`)
 
     setIsFilmLoading(true)
 

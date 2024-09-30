@@ -53,7 +53,7 @@ function Events({}: Props) {
       )}
 
       {!isLoading && (
-        <div className="flex gap-4 flex-wrap justify-center">
+        <div className="flex gap-4 flex-wrap justify-center mt-8">
           {events.map((event) => {
             return (
               <CardComponent

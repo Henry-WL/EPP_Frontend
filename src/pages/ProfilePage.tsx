@@ -1,12 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAxios } from "../components/hooks/useAxios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import authContext, { AuthContextType } from "../context/auth-context";
 
 type Props = {};
 
+interface User {
+    username: string;
+    email: string;
+}
+
 const ProfilePage = (props: Props) => {
-  const [user, setUser] = useState<{}>({});
+  const [user, setUser] = useState<User | null>();
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -14,17 +19,19 @@ const ProfilePage = (props: Props) => {
 
   const auth = useContext(authContext) as AuthContextType | null;
 
-  const { sendRequest, response, isLoading, error } = useAxios();
+  const { sendRequest, isLoading } = useAxios();
   ("");
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const responseData = await sendRequest(`/user/${auth.userId}`);
-        console.log(responseData);
-        setUser(responseData.data.foundUser);
-      } catch (err) {
-        console.log(err);
+      if (auth && auth.userId) {
+        try {
+          const responseData = await sendRequest(`/user/${auth.userId}`);
+          console.log(responseData);
+          setUser(responseData.data.foundUser);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
 
@@ -37,17 +44,19 @@ const ProfilePage = (props: Props) => {
 
   const editProfileHandler = async () => {
     if (isEditing) {
-        const response = await sendRequest(`/user/${auth?.userId}`, "PATCH", {
-            username, email, password
-        })
+      const response = await sendRequest(`/user/${auth?.userId}`, "PATCH", {
+        username,
+        email,
+        password,
+      });
 
-        setUser(response.data.updatedUser)
+      setUser(response.data.updatedUser);
     }
-  }
+  };
 
   return (
     <div>
-      {!isLoading && (
+      {!isLoading && user && (
         <div className="flex justify-center items-center h-screen bg-base-200">
           <div className="card w-full max-w-sm bg-base-100 shadow-xl">
             {/* Profile Picture */}
@@ -71,7 +80,6 @@ const ProfilePage = (props: Props) => {
 
               {isEditing && (
                 <div>
-
                   <div className="form-control mb-4">
                     <label htmlFor="Username" className="label">
                       <span className="label-text text-center">Username</span>
@@ -128,7 +136,10 @@ const ProfilePage = (props: Props) => {
               <div className="card-actions mt-4">
                 <button
                   className="btn btn-primary"
-                  onClick={() => {setIsEditing(!isEditing); editProfileHandler()}}
+                  onClick={() => {
+                    setIsEditing(!isEditing);
+                    editProfileHandler();
+                  }}
                 >
                   {isEditing ? "Save" : "Edit Profile"}
                 </button>

@@ -12,12 +12,13 @@ const stripePromise = loadStripe(
   "pk_test_51Q2b4x2K0tUYg45a9Q2G5xVdzqBDoYIUNH9KOl4a0c1eITUUf897ckHH3KnB6WM8NwYR9mDzS3u80xcwX3rKVx8f00pz2gWygO"
 , {locale: 'en-GB'});
 const elementsOptions = {
-    locale: 'en-GB', // Force British English to show "postcode"
+    locale: 'en-GB', 
   };
 
 interface TicketPurchaseFormProps {
   ticketPrice: number;
   receipt_email: string;
+  setPaymentSuccess: (success:boolean) => void
 }
 
 export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
@@ -39,7 +40,7 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ticketPrice, receipt_email }), // Send ticket price to backend
+        body: JSON.stringify({ ticketPrice, receipt_email }), 
       }
     );
 
@@ -74,14 +75,13 @@ export const TicketPurchaseForm: React.FC<TicketPurchaseFormProps> = ({
     } else if (paymentIntent?.status === "succeeded") {
       console.log("Payment successful:", paymentIntent);
       setPaymentSuccess(true);
-      // Handle post-payment actions, such as issuing tickets or confirmation
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-6">Purchase Ticket</h2>
-      <p className="text-lg mb-4 text-center">Total: £{ticketPrice}</p> {/* Display the price */}
+      <p className="text-lg mb-4 text-center">Total: £{ticketPrice}</p> 
 
 
       <button

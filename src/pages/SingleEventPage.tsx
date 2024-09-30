@@ -13,9 +13,6 @@ import { IoPricetagsOutline } from "react-icons/io5";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { TicketPurchaseForm } from "./PaymentPage";
 
-import { APIProvider } from "@vis.gl/react-google-maps";
-
-import App from "../components/PaymentComponent";
 import CustomMap from "../components/CustomMap";
 import AttendeeCard from "../components/AttendeeCard";
 import EventButtons from "../components/EventButtons";
@@ -31,6 +28,10 @@ interface Tag {
   tagName: string;
 }
 
+interface filmObject {
+  Poster: string
+}
+
 interface Event {
   _id: string;
   name: string;
@@ -42,6 +43,7 @@ interface Event {
   endDate: string;
   ticketPrice: number;
   payWant: boolean;
+  filmData: filmObject;
 }
 
 function SingleEventPage({}: Props) {
@@ -51,7 +53,7 @@ function SingleEventPage({}: Props) {
   const { eventId } = useParams();
   const auth = useContext(authContext) as AuthContextType | null;
   const [paymentSucess, setPaymentSuccess] = useState<boolean>(false);
-  const { response, error, errorMessage, isLoading, sendRequest } = useAxios();
+  const { error, errorMessage, isLoading, sendRequest } = useAxios();
 
   const navigate = useNavigate();
 
