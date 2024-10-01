@@ -76,6 +76,8 @@ The app is designed to be responsive across various devices, including desktops,
 
 ## Local install and setup
 
+- Your machine will need to have Node installed to run the application
+
 - Clone git repository to your local machine, install dependencies with npm install
 
 - You will need the URL of your backend whether this is being run locally or on a server is up to you
