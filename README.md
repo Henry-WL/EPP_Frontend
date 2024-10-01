@@ -57,6 +57,8 @@ The app is designed to be responsive across various devices, including desktops,
 ![Screenshot 2024-10-01 at 14 31 22](https://github.com/user-attachments/assets/e11594ae-efbc-4da5-90af-f56fdea2f87d)
 ![Screenshot 2024-10-01 at 14 31 34](https://github.com/user-attachments/assets/ba860f77-3680-4a56-a047-ffc5eef541ad)
 ![Screenshot 2024-10-01 at 14 33 51](https://github.com/user-attachments/assets/bd5fa8e8-04f8-4074-935f-52726757a060)
+![Screenshot 2024-10-01 at 14 49 44](https://github.com/user-attachments/assets/f023540c-0d22-4cfa-af7d-e04069e1a6e0)
+![Screenshot 2024-10-01 at 14 48 20](https://github.com/user-attachments/assets/7524e87e-a780-4dea-9563-4fe3cf7c5a52)
 
 
 
@@ -82,9 +84,9 @@ The app is designed to be responsive across various devices, including desktops,
 
 - Add the following variables to the env file and add the required keys / URLS
 
-  VITE_BASE_URL='http://localhost:3000/api'\
-  VITE_GOOGLE_MAPS_API_KEY=AIzaSyByXecr6ln1gbRYgJEbU1Do8ZdIXMBpSwY\
-  VITE_OMDB_API='30b97e2a'\
+  VITE_BASE_URL='http://localhost:3000/api'
+  VITE_GOOGLE_MAPS_API_KEY=AIzaSyByXecr6ln1gbRYgJEbU1Do8ZdIXMBpSwY
+  VITE_OMDB_API='30b97e2a'
 
 - Run 'npm run dev' in the Frontend directory
 
