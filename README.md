@@ -74,11 +74,19 @@ The app is designed to be responsive across various devices, including desktops,
 
 - Create a .env file in the top level of the cloned repo
 
+- You will need to sign up for an API key at https://www.omdbapi.com/, this is free and the key will be emailed to you
+
+- You will need a google maps API key, this can be setup through the google console and enabling Google Maps
+
+- The BASE_URL is your backend URL, run the backend locally on your machine at the same time
+
 - Add the following variables to the env file and add the required keys / URLS
 
-  VITE_BACKEND_URL=http://localhost:5001/api
+  VITE_BASE_URL='http://localhost:3000/api'
+  VITE_GOOGLE_MAPS_API_KEY=AIzaSyByXecr6ln1gbRYgJEbU1Do8ZdIXMBpSwY
+  VITE_OMDB_API='30b97e2a'
 
-- Run npm start to start the application
+- Run 'npm run dev' in the Frontend directory
 
 ## Contact
 
