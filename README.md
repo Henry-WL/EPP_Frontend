@@ -1,8 +1,8 @@
 # Project: BetterGram Application
 
-[Visit The App](https://bettergram-frontend.onrender.com/) (Please allow a few minutes for the server to start, then login as guest)
+[Visit The App](https://epp-frontend.onrender.com) (Please allow a few minutes for the server to start, then login as guest)
 
-[Backend Repository](https://github.com/BulletToothTony/BetterGram-Backend)
+[Backend Repository](https://github.com/Henry-WL/EPP_Backend)
 
 ## Demo video
 
@@ -21,7 +21,7 @@ https://streamable.com/i4lkyd
 
 #### Built With
 
-#### - React.js, Tailwind and DaisyUI, Node.js, Express, MongoDB
+#### - TypeScript, React.js, Tailwind and DaisyUI, Node.js, Express, MongoDB
 
 ## Key Features
 
