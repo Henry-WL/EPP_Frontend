@@ -6,7 +6,7 @@
 
 ## Demo video
 
-https://streamable.com/i4lkyd
+https://streamable.com/
 
 ## Table of Contents
 - [About The Project](#about-the-project)
@@ -17,7 +17,7 @@ https://streamable.com/i4lkyd
 
 ## About The Project
 
-'BetterGram' is a full stack clone of instagram, the applcication is made in the MERN stack and has all the features of instagram, allowing use on mobile and desktop.
+'EPP' is a full stack application allowing staff members to create events for others user's. The application focuses on film user's but the API can be changed to any interest.
 
 #### Built With
 
@@ -26,57 +26,42 @@ https://streamable.com/i4lkyd
 ## Key Features
 
 #### Authentication and Authorization with JWTs
-The BetterGram app implements authentication and authorization using JSON Web Tokens (JWTs). Upon login, the backend auth server issues a JWT, which is stored on the client-side. This token is sent in the request headers for routes that require authentication, ensuring secure access to protected resources.
+The EPP app implements authentication and authorization using JSON Web Tokens (JWTs). Upon login, the backend auth server issues a JWT, which is stored on the client-side. This token is sent in the request headers for routes that require authentication, ensuring secure access to protected resources.
 
-#### Real-time Feed
-If a user likes or comments on a photo the feed will update in real-time without the user needing to refresh the page to see changes, this allows for a great user experience.
+#### Join Events
+Users can see events available to them on their feed, they can filter these events by oldest/newest. Events will shows details such as times, location, tags, description and user's attending the event.
+
+#### Google Calendar
+When a user is an attendee of an event they can add the event to their google calendar.
+
+#### Payments
+Payments are handled with Stripe using their API, depending on the event type a user can pay for an event, pay what they want or join for free. This option is set by staff when creating an event.
+
+#### CRUD
+The application features all CRUD methods using the backend API creating in Express and using MongoDB. On the frontend staff user's can create, read, updated and delete events.
 
 #### Editing Profile
-Users can edit their own profile if they are logged in, changing their username, email, profile picture and password are all available, all updates are shown in real time. If a user edits their username this will update across their feed.
+Users can edit their own profile if they are logged in, changing their username, email and password are all available, all updates are shown in real time. If a user edits their profile this will update across the application.
 
 #### Responsive Design
 The app is designed to be responsive across various devices, including desktops, tablets, and smartphones. This ensures optimal usability and accessibility regardless of screen size or device type.
 
 ## Demo Screenshots
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 48 27" src="https://github.com/user-attachments/assets/e39abb23-cdab-4414-91d0-499f3ee50425">
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 49 27" src="https://github.com/user-attachments/assets/b8f7f608-32fc-48e8-beaa-e8b0975cbf77">
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 49 41" src="https://github.com/user-attachments/assets/c8d92c89-dc43-4c0a-b279-d6e099e02194">
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 52 09" src="https://github.com/user-attachments/assets/ddda70b1-923f-4c5b-b23a-4e1d25fca4c3">
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 53 13" src="https://github.com/user-attachments/assets/edc795a7-f26e-4791-a8d2-8696431981f6">
-
-<img width="1727" alt="Screenshot 2024-07-29 at 12 53 37" src="https://github.com/user-attachments/assets/dfabd0b2-d5b6-4f3c-836e-024cfa7db5b5">
-
-<img width="1722" alt="Screenshot 2024-07-29 at 12 59 25" src="https://github.com/user-attachments/assets/b1385075-5a60-4e6b-b709-9bee16d5d32d">
-
-<img width="1722" alt="Screenshot 2024-07-29 at 12 59 32" src="https://github.com/user-attachments/assets/19f8cb7e-c10c-4eb3-9134-a0ecb2684a0e">
-
-
-
-
+![Screenshot 2024-10-01 at 14 27 21](https://github.com/user-attachments/assets/7746d169-062e-4d24-8dc3-eaca370ae0ac)
+![Screenshot 2024-10-01 at 14 27 35](https://github.com/user-attachments/assets/71a1912c-b656-4f13-94d3-ffaf10e71762)
+![Screenshot 2024-10-01 at 14 28 05](https://github.com/user-attachments/assets/06b7c4f2-47f8-4b3a-a777-d211ef49d3a3)
+![Screenshot 2024-10-01 at 14 28 33](https://github.com/user-attachments/assets/7faf6dad-fabd-44e7-85bf-b52dc79d623d)
+![Screenshot 2024-10-01 at 14 29 08](https://github.com/user-attachments/assets/5dfbc11a-60f6-40bf-9e1e-b9ed7e8fba9a)
+![Screenshot 2024-10-01 at 14 29 13](https://github.com/user-attachments/assets/9825b195-5aeb-42b1-8e25-2ad9baf18203)
+![Screenshot 2024-10-01 at 14 30 17](https://github.com/user-attachments/assets/4de8ef62-b157-4808-8e56-a5544041ee00)
+![Screenshot 2024-10-01 at 14 31 22](https://github.com/user-attachments/assets/e11594ae-efbc-4da5-90af-f56fdea2f87d)
+![Screenshot 2024-10-01 at 14 31 34](https://github.com/user-attachments/assets/ba860f77-3680-4a56-a047-ffc5eef541ad)
+![Screenshot 2024-10-01 at 14 33 51](https://github.com/user-attachments/assets/bd5fa8e8-04f8-4074-935f-52726757a060)
 
 
 
 
 ## Mobile Screenshots
-
-<img width="377" alt="Screenshot 2024-07-29 at 12 55 07" src="https://github.com/user-attachments/assets/9f128ab4-4a7a-4a4a-8825-2e7a13c07dc3">
-<img width="377" alt="Screenshot 2024-07-29 at 12 55 14" src="https://github.com/user-attachments/assets/98eac0f7-779d-4fc8-a8dd-125cf81cd47d">
-<img width="377" alt="Screenshot 2024-07-29 at 12 56 26" src="https://github.com/user-attachments/assets/3b0ad9ac-db87-47ea-bc21-ed0b2fe92679">
-
-<img width="377" alt="Screenshot 2024-07-29 at 12 56 33" src="https://github.com/user-attachments/assets/f5dc9964-216b-4c6a-876e-11d82f2d7a23">
-<img width="377" alt="Screenshot 2024-07-29 at 12 56 44" src="https://github.com/user-attachments/assets/94d7affd-4ae5-421e-91d5-d51d0a551441">
-
-<img width="377" alt="Screenshot 2024-07-29 at 12 56 58" src="https://github.com/user-attachments/assets/1c285205-6b32-4cc9-aeb6-56586f602b26">
-
-<img width="377" alt="Screenshot 2024-07-29 at 12 57 18" src="https://github.com/user-attachments/assets/a48b06c2-3f0b-46a8-a39b-36a8bf20d875">
-
-<img width="377" alt="Screenshot 2024-07-29 at 12 58 26" src="https://github.com/user-attachments/assets/348791b6-a88b-4d19-afcb-fc9097b52b16">
-<img width="377" alt="Screenshot 2024-07-29 at 12 58 32" src="https://github.com/user-attachments/assets/156e62db-59cb-4bbb-99b1-82610681f98d">
 
 
 
