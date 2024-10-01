@@ -93,8 +93,8 @@ The app is designed to be responsive across various devices, including desktops,
 - Add the following variables to the env file and add the required keys / URLS
 
   VITE_BASE_URL='http://localhost:3000/api'
-  VITE_GOOGLE_MAPS_API_KEY=AIzaSyByXecr6ln1gbRYgJEbU1Do8ZdIXMBpSwY
-  VITE_OMDB_API='30b97e2a'
+  VITE_GOOGLE_MAPS_API_KEY=YOUR_API_KEY_HERE
+  VITE_OMDB_API='YOUR_API_KEY_HERE'
 
 - Run 'npm run dev' in the Frontend directory
 
