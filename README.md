@@ -64,8 +64,14 @@ The app is designed to be responsive across various devices, including desktops,
 
 
 ## Mobile Screenshots
-
-
+![Screenshot 2024-10-01 at 14 51 42](https://github.com/user-attachments/assets/f8dad02e-a668-48ea-a92d-4db12e232130)
+![Screenshot 2024-10-01 at 14 51 59](https://github.com/user-attachments/assets/53dc4b9d-81c2-4339-97e8-3b28f0913991)
+![Screenshot 2024-10-01 at 14 52 24](https://github.com/user-attachments/assets/fb79a274-2438-4eb8-8b27-e8e76966b8d2)
+![Screenshot 2024-10-01 at 14 52 45](https://github.com/user-attachments/assets/93985365-ce2e-4c93-8f34-3ed523004af5)
+![Screenshot 2024-10-01 at 14 52 52](https://github.com/user-attachments/assets/903bf8cd-58c6-4240-82bd-4187d478f206)
+![Screenshot 2024-10-01 at 14 53 07](https://github.com/user-attachments/assets/681098e7-eb16-4d22-a668-2314d7a84a94)
+![Screenshot 2024-10-01 at 14 53 16](https://github.com/user-attachments/assets/7309b225-34af-46bf-9df8-36bb335c3ed9)
+![Screenshot 2024-10-01 at 14 53 29](https://github.com/user-attachments/assets/884a1c92-7f1a-4f3c-8423-96c074c69ff1)
 
 
 ## Local install and setup
