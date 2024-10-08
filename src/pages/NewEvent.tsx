@@ -30,7 +30,7 @@ function NewEvent({}: Props) {
 
     setIsFilmLoading(true)
 
-    const filmData = await axios.get(`https://www.omdbapi.com/?t=${filmName}&apikey=${import.meta.env.VITE_OMDB_API}`)
+    const filmData = await axios.get(`http://www.omdbapi.com/?t=${filmName}&apikey=${import.meta.env.VITE_OMDB_API}`)
 
     setIsFilmLoading(false)
 
